@@ -1,5 +1,10 @@
 import {PartOfPlanEntity} from "../types";
 import {ValidationError} from "../utils/errors";
+import {pool} from "../utils/db";
+import {FieldPacket} from "mysql2";
+import {v4 as uuid} from 'uuid';
+
+type PartOfPlanRecordResults = [PartOfPlanEntity[], FieldPacket[]];
 
 export class PartOfPlanRecord implements PartOfPlanEntity {
     public id: string;
@@ -43,6 +48,23 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.tempo = obj.tempo;
         this.break = obj.break;
         this.url = obj.url;
+    }
+
+    static async getOne(id: string): Promise<PartOfPlanRecord | null> {
+        const [results] = await pool.execute("SELECT * from `plans` WHERE `id` = id", {
+            id,
+        }) as PartOfPlanRecordResults;
+        return results.length === 0 ? null : new PartOfPlanRecord(results[0]);
+    }
+
+    async insert(): Promise<void> {
+        if (!this.id) {
+            this.id = uuid();
+        } else {
+            throw new Error('Nie można dodać czegoś, co już istnieje.');
+        }
+
+        await pool.execute("INSERT INTO `plans`(`id`, `exercise`, `series`, `repetitions`, `tempo`, `break`, `url`) VALUES(:id, :exercise, :series, :repetitions, :tempo, :break, :url)", this);
     }
 }
 
