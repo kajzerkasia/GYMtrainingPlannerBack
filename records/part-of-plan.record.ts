@@ -8,6 +8,7 @@ type PartOfPlanRecordResults = [PartOfPlanEntity[], FieldPacket[]];
 
 export class PartOfPlanRecord implements PartOfPlanEntity {
     public id: string;
+    public order: string;
     public exercise: string;
     public series: number;
     public repetitions: string;
@@ -17,6 +18,10 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
 
 
     constructor(obj: PartOfPlanEntity) {
+        if (!obj.order || obj.order.length > 50) {
+            throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 50 znaków.');
+        }
+
         if (!obj.exercise || obj.exercise.length > 100) {
             throw new ValidationError('Należy podać nazwę ćwiczenia o długości max. 100 znaków.');
         }
@@ -42,6 +47,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         }
 
         this.id = obj.id;
+        this.order = obj.order;
         this.exercise = obj.exercise;
         this.series = obj.series;
         this.repetitions = obj.repetitions;
@@ -49,6 +55,13 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.break = obj.break;
         this.url = obj.url;
     }
+
+    static async findAll(): Promise<PartOfPlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `plans`") as PartOfPlanRecordResults;
+
+        return results.map(obj => new PartOfPlanRecord(obj));
+    }
+
 
     static async getOne(id: string): Promise<PartOfPlanRecord | null> {
         const [results] = await pool.execute("SELECT * from `plans` WHERE `id` = id", {
@@ -64,7 +77,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `plans`(`id`, `exercise`, `series`, `repetitions`, `tempo`, `break`, `url`) VALUES(:id, :exercise, :series, :repetitions, :tempo, :break, :url)", this);
+        await pool.execute("INSERT INTO `plans`(`id`, `order`, `exercise`, `series`, `repetitions`, `tempo`, `break`, `url`) VALUES(:id, :order, :exercise, :series, :repetitions, :tempo, :break, :url)", this);
     }
 }
 
