@@ -18,7 +18,7 @@ app.use(rateLimit({
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 }))
 
-app.use('/add-exercises', partOfPlanRouter);
+app.use('/add-exercise', partOfPlanRouter);
 
 app.use(handleError);
 
