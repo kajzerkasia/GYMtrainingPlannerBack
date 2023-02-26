@@ -12,8 +12,8 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public exercise: string;
     public series: number;
     public repetitions: string;
-    public tempo: number;
     public break: string;
+    public tips: string;
     public url: string;
 
 
@@ -34,12 +34,12 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             throw new ValidationError('Należy podać ilość powtórzeń lub ich zakres o długości max. 50 znaków.');
         }
 
-        if (obj.tempo < 0 || obj.tempo > 65535) {
-            throw new ValidationError('Tempo nie może być mniejsze niż 0 lub większe niż 65535.');
-        }
-
         if (!obj.break || obj.break.length > 50) {
             throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 50 znaków.');
+        }
+
+        if (!obj.tips || obj.tips.length > 50) {
+            throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 50 znaków.');
         }
 
         if (!obj.url || obj.url.length > 100) {
@@ -51,8 +51,8 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.exercise = obj.exercise;
         this.series = obj.series;
         this.repetitions = obj.repetitions;
-        this.tempo = obj.tempo;
         this.break = obj.break;
+        this.tips = obj.tips;
         this.url = obj.url;
     }
 
@@ -77,7 +77,22 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `plans`(`id`, `order`, `exercise`, `series`, `repetitions`, `tempo`, `break`, `url`) VALUES(:id, :order, :exercise, :series, :repetitions, :tempo, :break, :url)", this);
+        await pool.execute("INSERT INTO `plans`(`id`, `order`, `exercise`, `series`, `repetitions`, `break`, `tips`, `url`) VALUES(:id, :order, :exercise, :series, :repetitions, :break, :tips, :url)", this);
+    }
+
+    async update() {
+
+        await pool.execute("UPDATE `plans` SET `order` = :order, `exercise` = :exercise, `series` = :series, `repetitions` = :repetitions, `break` = :break, `tips` = :tips `url` = :url WHERE `id` = :id", {
+            id: this.id,
+            order: this.order,
+            exercise: this.exercise,
+            series: this.series,
+            repetitions: this.repetitions,
+            break: this.break,
+            tips: this.tips,
+            url: this.url,
+        });
+
     }
 }
 
