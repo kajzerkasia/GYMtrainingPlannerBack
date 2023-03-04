@@ -94,5 +94,11 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         });
 
     }
+
+    async delete(): Promise<void> {
+        await pool.execute("DELETE FROM `plans` WHERE `id` = :id", {
+            id: this.id,
+        })
+    }
 }
 
