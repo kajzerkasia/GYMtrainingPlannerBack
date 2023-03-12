@@ -1,1 +1,1 @@
-export * from './part-of-plan';
+export * from './exercise';

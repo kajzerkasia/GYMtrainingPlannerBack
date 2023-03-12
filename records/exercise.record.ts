@@ -1,12 +1,12 @@
-import {PartOfPlanEntity} from "../types";
+import {ExerciseEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {v4 as uuid} from 'uuid';
 
-type PartOfPlanRecordResults = [PartOfPlanEntity[], FieldPacket[]];
+type ExerciseRecordResults = [ExerciseEntity[], FieldPacket[]];
 
-export class PartOfPlanRecord implements PartOfPlanEntity {
+export class ExerciseRecord implements ExerciseEntity {
     public id: string;
     public order: string;
     public exercise: string;
@@ -17,7 +17,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public url: string;
 
 
-    constructor(obj: PartOfPlanEntity) {
+    constructor(obj: ExerciseEntity) {
         if (!obj.order || obj.order.length > 50) {
             throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 50 znaków.');
         }
@@ -56,18 +56,18 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.url = obj.url;
     }
 
-    static async findAll(): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `plans`") as PartOfPlanRecordResults;
+    static async findAll(): Promise<ExerciseEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `plans`") as ExerciseRecordResults;
 
-        return results.map(obj => new PartOfPlanRecord(obj));
+        return results.map(obj => new ExerciseRecord(obj));
     }
 
 
-    static async getOne(id: string): Promise<PartOfPlanRecord | null> {
+    static async getOne(id: string): Promise<ExerciseRecord | null> {
         const [results] = await pool.execute("SELECT * from `plans` WHERE `id` = id", {
             id,
-        }) as PartOfPlanRecordResults;
-        return results.length === 0 ? null : new PartOfPlanRecord(results[0]);
+        }) as ExerciseRecordResults;
+        return results.length === 0 ? null : new ExerciseRecord(results[0]);
     }
 
     async insert(): Promise<void> {
