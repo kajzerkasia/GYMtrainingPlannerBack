@@ -9,7 +9,7 @@ type ExerciseRecordResults = [ExerciseEntity[], FieldPacket[]];
 export class ExerciseRecord implements ExerciseEntity {
     public id: string;
     public order: string;
-    public exercise: string;
+    public name: string;
     public series: number;
     public repetitions: string;
     public break: string;
@@ -22,7 +22,7 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 50 znaków.');
         }
 
-        if (!obj.exercise || obj.exercise.length > 100) {
+        if (!obj.name || obj.name.length > 100) {
             throw new ValidationError('Należy podać nazwę ćwiczenia o długości max. 100 znaków.');
         }
 
@@ -48,7 +48,7 @@ export class ExerciseRecord implements ExerciseEntity {
 
         this.id = obj.id;
         this.order = obj.order;
-        this.exercise = obj.exercise;
+        this.name = obj.name;
         this.series = obj.series;
         this.repetitions = obj.repetitions;
         this.break = obj.break;
@@ -77,15 +77,15 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `plans`(`id`, `order`, `exercise`, `series`, `repetitions`, `break`, `tips`, `url`) VALUES(:id, :order, :exercise, :series, :repetitions, :break, :tips, :url)", this);
+        await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `break`, `tips`, `url`) VALUES(:id, :order, :name, :series, :repetitions, :break, :tips, :url)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `plans` SET `order` = :order, `exercise` = :exercise, `series` = :series, `repetitions` = :repetitions, `break` = :break, `tips` = :tips `url` = :url WHERE `id` = :id", {
+        await pool.execute("UPDATE `plans` SET `order` = :order, `name` = :name, `series` = :series, `repetitions` = :repetitions, `break` = :break, `tips` = :tips `url` = :url WHERE `id` = :id", {
             id: this.id,
             order: this.order,
-            exercise: this.exercise,
+            name: this.name,
             series: this.series,
             repetitions: this.repetitions,
             break: this.break,
