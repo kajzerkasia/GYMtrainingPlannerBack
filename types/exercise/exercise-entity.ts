@@ -1,7 +1,7 @@
 export interface ExerciseEntity {
     id?: string;
     order: string;
-    exercise: string;
+    name: string;
     series: number;
     repetitions: string;
     break: string;
@@ -10,7 +10,7 @@ export interface ExerciseEntity {
 }
 
 export interface ArrayOfParts {
-    partsList: ExerciseEntity[];
+    exercisesList: ExerciseEntity[];
 }
 
 type SavePartOfPlan = {

@@ -1,25 +1,24 @@
 import {Router} from "express";
 import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
-import {ExerciseEntity} from "../types";
 
 export const exerciseRouter = Router()
 
-    .get('/', async (req, res) => {
-        const partOfPlan = await ExerciseRecord.findAll();
+    .get('/exercises', async (req, res) => {
+        const exercise = await ExerciseRecord.findAll();
 
-        res.json(partOfPlan);
+        res.json(exercise);
     })
 
-    .get('/:id', async (req, res) => {
-        const partOfPlan = await ExerciseRecord.getOne(req.params.id);
-        res.json(partOfPlan);
+    .get('/exercises/:id', async (req, res) => {
+        const exercise = await ExerciseRecord.getOne(req.params.id);
+        res.json(exercise);
     })
 
-    .post('/', async (req, res) => {
-        const partOfPlan = new ExerciseRecord(req.body);
-        await partOfPlan.insert();
-        res.json(partOfPlan);
+    .post('/exercises', async (req, res) => {
+        const exercise = new ExerciseRecord(req.body);
+        await exercise.insert();
+        res.json(exercise);
     })
 
     .delete('/:id', async (req, res) => {
