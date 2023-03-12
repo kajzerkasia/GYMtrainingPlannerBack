@@ -1,2 +1,2 @@
 export * from './exercise';
-export * from './progression';
+export * from './rule';

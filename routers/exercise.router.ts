@@ -1,22 +1,21 @@
 import {Router} from "express";
 import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
-import {ExerciseEntity} from "../types";
 
 export const exerciseRouter = Router()
 
-    .get('/', async (req, res) => {
+    .get('/exercises', async (req, res) => {
         const exercise = await ExerciseRecord.findAll();
 
         res.json(exercise);
     })
 
-    .get('/:id', async (req, res) => {
+    .get('/exercises/:id', async (req, res) => {
         const exercise = await ExerciseRecord.getOne(req.params.id);
         res.json(exercise);
     })
 
-    .post('/', async (req, res) => {
+    .post('/exercises', async (req, res) => {
         const exercise = new ExerciseRecord(req.body);
         await exercise.insert();
         res.json(exercise);
