@@ -3,7 +3,7 @@ import cors from 'cors';
 import 'express-async-errors';
 import {handleError} from "./utils/errors";
 import rateLimit from 'express-rate-limit'
-import {partOfPlanRouter} from "./routers/part-of-plan.router";
+import {exerciseRouter} from "./routers/exercise.router";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(rateLimit({
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 }))
 
-app.use('/add-exercise', partOfPlanRouter);
+app.use('/add-exercise', exerciseRouter);
 
 app.use(handleError);
 

@@ -1,45 +1,42 @@
 import {Router} from "express";
-import {PartOfPlanRecord} from "../records/part-of-plan.record";
+import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
-import {PartOfPlanEntity} from "../types";
+import {ExerciseEntity} from "../types";
 
-export const partOfPlanRouter = Router()
+export const exerciseRouter = Router()
 
     .get('/', async (req, res) => {
-        const partOfPlan = await PartOfPlanRecord.findAll();
+        const partOfPlan = await ExerciseRecord.findAll();
 
         res.json(partOfPlan);
     })
 
     .get('/:id', async (req, res) => {
-        const partOfPlan = await PartOfPlanRecord.getOne(req.params.id);
+        const partOfPlan = await ExerciseRecord.getOne(req.params.id);
         res.json(partOfPlan);
     })
 
     .post('/', async (req, res) => {
-        const partOfPlan = new PartOfPlanRecord(req.body);
+        const partOfPlan = new ExerciseRecord(req.body);
         await partOfPlan.insert();
         res.json(partOfPlan);
     })
 
     .delete('/:id', async (req, res) => {
-        const gift = await PartOfPlanRecord.getOne(req.params.id)
+        const exercise = await ExerciseRecord.getOne(req.params.id)
 
-        if (!gift) {
+        if (!exercise) {
             throw new ValidationError('No such exercise');
         }
 
-        await gift.delete();
+        await exercise.delete();
 
         res.end();
     })
 
-    .patch('/exercise/:exerciseId', async (req, res) => {
-        const {body}: {
-            body: PartOfPlanEntity;
-        } = req;
+    .patch('/:id', async (req, res) => {
 
-        const exercise = await PartOfPlanRecord.getOne(req.params.exerciseId);
+        const exercise = await ExerciseRecord.getOne(req.params.id);
 
         if (exercise === null) {
             throw new ValidationError('Nie znaleziono takiego ćwiczenia.');
