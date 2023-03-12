@@ -6,20 +6,20 @@ import {ExerciseEntity} from "../types";
 export const exerciseRouter = Router()
 
     .get('/', async (req, res) => {
-        const partOfPlan = await ExerciseRecord.findAll();
+        const exercise = await ExerciseRecord.findAll();
 
-        res.json(partOfPlan);
+        res.json(exercise);
     })
 
     .get('/:id', async (req, res) => {
-        const partOfPlan = await ExerciseRecord.getOne(req.params.id);
-        res.json(partOfPlan);
+        const exercise = await ExerciseRecord.getOne(req.params.id);
+        res.json(exercise);
     })
 
     .post('/', async (req, res) => {
-        const partOfPlan = new ExerciseRecord(req.body);
-        await partOfPlan.insert();
-        res.json(partOfPlan);
+        const exercise = new ExerciseRecord(req.body);
+        await exercise.insert();
+        res.json(exercise);
     })
 
     .delete('/:id', async (req, res) => {
