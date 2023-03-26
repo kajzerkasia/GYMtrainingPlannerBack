@@ -21,7 +21,7 @@ export const exerciseRouter = Router()
         res.json(exercise);
     })
 
-    .delete('/:id', async (req, res) => {
+    .delete('/exercises/:id', async (req, res) => {
         const exercise = await ExerciseRecord.getOne(req.params.id)
 
         if (!exercise) {
@@ -33,7 +33,7 @@ export const exerciseRouter = Router()
         res.end();
     })
 
-    .patch('/:id', async (req, res) => {
+    .put('/exercises/:id', async (req, res) => {
 
         const exercise = await ExerciseRecord.getOne(req.params.id);
 
