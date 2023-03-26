@@ -57,7 +57,7 @@ export class ExerciseRecord implements ExerciseEntity {
     }
 
     static async findAll(): Promise<ExerciseEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `plans`") as ExerciseRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `plans` ORDER BY `order`") as ExerciseRecordResults;
 
         return results.map(obj => new ExerciseRecord(obj));
     }

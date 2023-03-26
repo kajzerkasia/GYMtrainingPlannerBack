@@ -25,7 +25,7 @@ export const exerciseRouter = Router()
         const exercise = await ExerciseRecord.getOne(req.params.id)
 
         if (!exercise) {
-            throw new ValidationError('No such exercise');
+            throw new ValidationError('Nie znaleziono takiego ćwiczenia.');
         }
 
         await exercise.delete();
