@@ -21,7 +21,7 @@ export const ruleRouter = Router()
         res.json(rule);
     })
 
-    .delete('rules/:id', async (req, res) => {
+    .delete('/rules/:id', async (req, res) => {
         const rule = await RuleRecord.getOne(req.params.id)
 
         if (!rule) {
@@ -33,13 +33,15 @@ export const ruleRouter = Router()
         res.end();
     })
 
-    .patch('rules/:id', async (req, res) => {
+    .put('/rules/:id', async (req, res) => {
 
         const rule = await RuleRecord.getOne(req.params.id);
 
         if (rule === null) {
             throw new ValidationError('Nie znaleziono takiej zasady.');
         }
+
+        rule.rule = req.body.rule;
 
         await rule.update();
 

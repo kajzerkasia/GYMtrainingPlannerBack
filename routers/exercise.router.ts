@@ -41,6 +41,14 @@ export const exerciseRouter = Router()
             throw new ValidationError('Nie znaleziono takiego ćwiczenia.');
         }
 
+        exercise.order = req.body.order;
+        exercise.name = req.body.name;
+        exercise.series = req.body.series;
+        exercise.repetitions = req.body.repetitions;
+        exercise.pause = req.body.pause;
+        exercise.tips = req.body.tips;
+        exercise.url = req.body.url;
+
         await exercise.update();
 
         res.json(exercise);
