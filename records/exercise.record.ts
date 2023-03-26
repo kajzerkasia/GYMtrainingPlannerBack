@@ -12,7 +12,7 @@ export class ExerciseRecord implements ExerciseEntity {
     public name: string;
     public series: number;
     public repetitions: string;
-    public break: string;
+    public pause: string;
     public tips: string;
     public url: string;
 
@@ -34,7 +34,7 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new ValidationError('Należy podać ilość powtórzeń lub ich zakres o długości max. 50 znaków.');
         }
 
-        if (!obj.break || obj.break.length > 50) {
+        if (!obj.pause || obj.pause.length > 50) {
             throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 50 znaków.');
         }
 
@@ -51,7 +51,7 @@ export class ExerciseRecord implements ExerciseEntity {
         this.name = obj.name;
         this.series = obj.series;
         this.repetitions = obj.repetitions;
-        this.break = obj.break;
+        this.pause = obj.pause;
         this.tips = obj.tips;
         this.url = obj.url;
     }
@@ -77,18 +77,18 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `break`, `tips`, `url`) VALUES(:id, :order, :name, :series, :repetitions, :break, :tips, :url)", this);
+        await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `plans` SET `order` = :order, `name` = :name, `series` = :series, `repetitions` = :repetitions, `break` = :break, `tips` = :tips `url` = :url WHERE `id` = :id", {
+        await pool.execute("UPDATE `plans` SET `order` = :order, `name` = :name, `series` = :series, `repetitions` = :repetitions, `pause` = :pause, `tips` = :tips, `url` = :url WHERE `id` = :id", {
             id: this.id,
             order: this.order,
             name: this.name,
             series: this.series,
             repetitions: this.repetitions,
-            break: this.break,
+            pause: this.pause,
             tips: this.tips,
             url: this.url,
         });

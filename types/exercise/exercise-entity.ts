@@ -4,12 +4,12 @@ export interface ExerciseEntity {
     name: string;
     series: number;
     repetitions: string;
-    break: string;
+    pause: string;
     tips: string;
     url: string;
 }
 
-export interface ArrayOfParts {
+export interface ArrayOfExercises {
     exercisesList: ExerciseEntity[];
 }
 
@@ -22,7 +22,7 @@ type UpdateForm = {
 }
 
 type PartsList = {
-    partsList: ArrayOfParts;
+    partsList: ArrayOfExercises;
 }
 
 type Form = {
@@ -37,3 +37,5 @@ type Form = {
 // }
 
 // @TODO - ogarnąć typy - Front: TableFormInputs
+
+// zajrzeć na swój GH - tam może ogarniesz jak robić update czy coś - react-posts-app
