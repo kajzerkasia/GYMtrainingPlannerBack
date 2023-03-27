@@ -25,7 +25,7 @@ export const ruleRouter = Router()
         const rule = await RuleRecord.getOne(req.params.id)
 
         if (!rule) {
-            throw new ValidationError('No such rule :(');
+            throw new ValidationError('Nie znaleziono takiej zasady.');
         }
 
         await rule.delete();

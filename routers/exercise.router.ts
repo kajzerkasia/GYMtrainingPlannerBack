@@ -5,9 +5,13 @@ import {ValidationError} from "../utils/errors";
 export const exerciseRouter = Router()
 
     .get('/exercises', async (req, res) => {
-        const exercise = await ExerciseRecord.findAll();
+        const role = req.query.role;
 
-        res.json(exercise);
+        const exercises = await (
+            role ? ExerciseRecord.findAllWithRole(role) : ExerciseRecord.findAll()
+        );
+
+        res.json(exercises);
     })
 
     .get('/exercises/:id', async (req, res) => {
@@ -25,7 +29,7 @@ export const exerciseRouter = Router()
         const exercise = await ExerciseRecord.getOne(req.params.id)
 
         if (!exercise) {
-            throw new ValidationError('No such exercise');
+            throw new ValidationError('Nie znaleziono takiego ćwiczenia.');
         }
 
         await exercise.delete();
