@@ -16,6 +16,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             throw new ValidationError('Należy podać nazwę części planu o długości max. 100 znaków.');
         }
 
+
         this.id = obj.id;
         this.name = obj.name;
         this.slug = obj.slug;
