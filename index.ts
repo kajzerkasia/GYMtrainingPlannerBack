@@ -5,6 +5,7 @@ import {handleError} from "./utils/errors";
 import rateLimit from 'express-rate-limit'
 import {exerciseRouter} from "./routers/exercise.router";
 import {ruleRouter} from "./routers/rule.router";
+import {partOfPlanRouter} from "./routers/part-of-plan.router";
 
 const app = express();
 
@@ -21,11 +22,10 @@ app.use(rateLimit({
 
 app.use('/add-exercise', exerciseRouter);
 app.use('/add-rule', ruleRouter);
+app.use('/add-part', partOfPlanRouter);
 
 app.use(handleError);
 
 app.listen(3001, '0.0.0.0', () => {
     console.log('Listening on port http://localhost:3001');
 });
-
-// jeszcze dodać edytowanie planu - żeby można było zmienić nazwy dni albo dodać nowe

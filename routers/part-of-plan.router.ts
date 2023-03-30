@@ -5,9 +5,11 @@ import {ValidationError} from "../utils/errors";
 export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
-        const parts = await PartOfPlanRecord.findAll();
 
-        res.json(parts);
+       if (typeof req.query.slug === 'string') {
+           return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
+       }
+        // return res.json(await PartOfPlanRecord.findAll());
     })
 
     .get('/plans/:id', async (req, res) => {

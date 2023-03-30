@@ -7,6 +7,7 @@ export interface ExerciseEntity {
     pause: string;
     tips: string;
     url: string;
+    partId?: string;
 }
 
 export enum Status {
