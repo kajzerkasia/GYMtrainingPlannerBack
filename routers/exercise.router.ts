@@ -2,16 +2,15 @@ import {Router} from "express";
 import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
 
+
 export const exerciseRouter = Router()
 
     .get('/exercises', async (req, res) => {
-        const role = req.query.role;
 
-        const exercises = await (
-            role ? ExerciseRecord.findAllWithRole(role) : ExerciseRecord.findAll()
-        );
+        if (typeof req.query.partId === 'string') {
+            return res.json(await ExerciseRecord.findAllWithPartId(req.query.partId))
+        }
 
-        res.json(exercises);
     })
 
     .get('/exercises/:id', async (req, res) => {

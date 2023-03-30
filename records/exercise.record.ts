@@ -1,4 +1,4 @@
-import {ExerciseEntity} from "../types";
+import {ExerciseEntity, PartOfPlanEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
@@ -15,6 +15,7 @@ export class ExerciseRecord implements ExerciseEntity {
     public pause: string;
     public tips: string;
     public url: string;
+    public partId: string;
 
 
     constructor(obj: ExerciseEntity) {
@@ -54,6 +55,7 @@ export class ExerciseRecord implements ExerciseEntity {
         this.pause = obj.pause;
         this.tips = obj.tips;
         this.url = obj.url;
+        this.partId = obj.partId
     }
 
     static async findAll(): Promise<ExerciseEntity[]> {
@@ -62,15 +64,16 @@ export class ExerciseRecord implements ExerciseEntity {
         return results.map(obj => new ExerciseRecord(obj));
     }
 
-    static async findAllWithRole(role: any): Promise<ExerciseEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `plans` ORDER BY `order` ASC", {
-            role,
+    static async findAllWithPartId(partId: string): Promise<ExerciseRecord[]> {
+        const [results] = await pool.execute("SELECT * FROM `plans` WHERE `partId` = :partId", {
+            partId,
         }) as ExerciseRecordResults;
+
         return results.map(obj => new ExerciseRecord(obj));
     }
 
     static async getOne(id: string): Promise<ExerciseRecord | null> {
-        const [results] = await pool.execute("SELECT * from `plans` WHERE `id` = id", {
+        const [results] = await pool.execute("SELECT * from `plans` WHERE `id` = :id", {
             id,
         }) as ExerciseRecordResults;
         return results.length === 0 ? null : new ExerciseRecord(results[0]);

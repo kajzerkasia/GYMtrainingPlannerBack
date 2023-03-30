@@ -16,7 +16,6 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             throw new ValidationError('Należy podać nazwę części planu o długości max. 100 znaków.');
         }
 
-
         this.id = obj.id;
         this.name = obj.name;
         this.slug = obj.slug;
@@ -24,6 +23,14 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
 
     static async findAll(): Promise<PartOfPlanEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `parts_of_plan`") as PartOfPlanRecordResults;
+
+        return results.map(obj => new PartOfPlanRecord(obj));
+    }
+
+    static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = slug", {
+            slug,
+        }) as PartOfPlanRecordResults;
 
         return results.map(obj => new PartOfPlanRecord(obj));
     }
