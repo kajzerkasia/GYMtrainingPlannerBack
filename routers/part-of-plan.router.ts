@@ -1,15 +1,18 @@
 import {Router} from "express";
 import {PartOfPlanRecord} from "../records/part-of-plan.record";
 import {ValidationError} from "../utils/errors";
+import {ExerciseRecord} from "../records/exercise.record";
 
 export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
+        console.log(req.query.slug)
 
        if (typeof req.query.slug === 'string') {
            return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
        }
-        // return res.json(await PartOfPlanRecord.findAll());
+
+        return res.json(await PartOfPlanRecord.findAll());
     })
 
     .get('/plans/:id', async (req, res) => {

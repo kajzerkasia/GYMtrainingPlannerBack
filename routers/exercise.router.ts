@@ -1,15 +1,19 @@
 import {Router} from "express";
 import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
+import {PartOfPlanRecord} from "../records/part-of-plan.record";
 
 
 export const exerciseRouter = Router()
 
     .get('/exercises', async (req, res) => {
 
+        console.log(req.query.partId)
         if (typeof req.query.partId === 'string') {
             return res.json(await ExerciseRecord.findAllWithPartId(req.query.partId))
         }
+
+        return res.json(await ExerciseRecord.findAll());
 
     })
 

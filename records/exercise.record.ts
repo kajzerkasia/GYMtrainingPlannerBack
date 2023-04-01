@@ -64,7 +64,7 @@ export class ExerciseRecord implements ExerciseEntity {
         return results.map(obj => new ExerciseRecord(obj));
     }
 
-    static async findAllWithPartId(partId: string): Promise<ExerciseRecord[]> {
+    static async findAllWithPartId(partId: string): Promise<ExerciseEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `plans` WHERE `partId` = :partId", {
             partId,
         }) as ExerciseRecordResults;
@@ -86,12 +86,12 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url)", this);
+        await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`, `partId`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url, :partId)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `plans` SET `order` = :order, `name` = :name, `series` = :series, `repetitions` = :repetitions, `pause` = :pause, `tips` = :tips, `url` = :url WHERE `id` = :id", {
+        await pool.execute("UPDATE `plans` SET `order` = :order, `name` = :name, `series` = :series, `repetitions` = :repetitions, `pause` = :pause, `tips` = :tips, `url` = :url, `partId` = :partId WHERE `id` = :id", {
             id: this.id,
             order: this.order,
             name: this.name,
@@ -100,6 +100,7 @@ export class ExerciseRecord implements ExerciseEntity {
             pause: this.pause,
             tips: this.tips,
             url: this.url,
+            partId: this.partId
         });
 
     }
