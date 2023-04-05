@@ -8,7 +8,6 @@ export const exerciseRouter = Router()
 
     .get('/exercises', async (req, res) => {
 
-        console.log(req.query.partId)
         if (typeof req.query.partId === 'string') {
             return res.json(await ExerciseRecord.findAllWithPartId(req.query.partId))
         }
@@ -55,6 +54,7 @@ export const exerciseRouter = Router()
         exercise.pause = req.body.pause;
         exercise.tips = req.body.tips;
         exercise.url = req.body.url;
+        exercise.partId = req.body.partId;
 
         await exercise.update();
 

@@ -6,7 +6,7 @@ import {ExerciseRecord} from "../records/exercise.record";
 export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
-        console.log(req.query.slug)
+        // console.log(req.query.slug)
 
        if (typeof req.query.slug === 'string') {
            return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
@@ -46,7 +46,8 @@ export const partOfPlanRouter = Router()
             throw new ValidationError('Nie znaleziono takiej części planu.');
         }
 
-        part.name = req.body.part;
+        part.name = req.body.name;
+        part.slug = req.body.slug;
 
         await part.update();
 

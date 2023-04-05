@@ -26,7 +26,7 @@ export class RuleRecord implements RuleEntity {
     }
 
     static async getOne(id: string): Promise<RuleRecord | null> {
-        const [results] = await pool.execute("SELECT * from `progression_rules` WHERE `id` = id", {
+        const [results] = await pool.execute("SELECT * from `progression_rules` WHERE `id` = :id", {
             id,
         }) as RuleRecordResults;
         return results.length === 0 ? null : new RuleRecord(results[0]);
