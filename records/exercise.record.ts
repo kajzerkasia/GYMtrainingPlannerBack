@@ -79,7 +79,8 @@ export class ExerciseRecord implements ExerciseEntity {
         return results.length === 0 ? null : new ExerciseRecord(results[0]);
     }
 
-    async insert(): Promise<void> {
+    async insert(): Promise<string> {
+
         if (!this.id) {
             this.id = uuid();
         } else {
@@ -87,6 +88,8 @@ export class ExerciseRecord implements ExerciseEntity {
         }
 
         await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`, `partId`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url, :partId)", this);
+
+        return this.id;
     }
 
     async update() {
@@ -100,7 +103,7 @@ export class ExerciseRecord implements ExerciseEntity {
             pause: this.pause,
             tips: this.tips,
             url: this.url,
-            partId: this.partId
+            partId: this.partId,
         });
 
     }
