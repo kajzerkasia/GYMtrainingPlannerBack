@@ -43,8 +43,8 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 500 znaków.');
         }
 
-        if (!obj.url || obj.url.length > 100) {
-            throw new ValidationError('Link ogłoszenia nie może być pusty ani przekraczać 100 znaków.');
+        if (obj.url.length > 100) {
+            throw new ValidationError('Link ogłoszenia nie może przekraczać 100 znaków.');
         }
 
         this.id = obj.id;
