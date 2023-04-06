@@ -11,8 +11,8 @@ export class RuleRecord implements RuleEntity {
     public rule: string;
 
     constructor(obj: RuleEntity) {
-        if (!obj.rule || obj.rule.length > 150) {
-            throw new ValidationError('Należy podać zasadę progresji o długości max. 150 znaków.');
+        if (!obj.rule || obj.rule.length > 500) {
+            throw new ValidationError('Należy podać zasadę progresji o długości max. 500 znaków.');
         }
 
         this.id = obj.id;

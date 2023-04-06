@@ -39,8 +39,8 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 50 znaków.');
         }
 
-        if (!obj.tips || obj.tips.length > 50) {
-            throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 50 znaków.');
+        if (!obj.tips || obj.tips.length > 500) {
+            throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 500 znaków.');
         }
 
         if (!obj.url || obj.url.length > 100) {
@@ -65,7 +65,7 @@ export class ExerciseRecord implements ExerciseEntity {
     }
 
     static async findAllWithPartId(partId: string): Promise<ExerciseEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `plans` WHERE `partId` = :partId", {
+        const [results] = await pool.execute("SELECT * FROM `plans` WHERE `partId` = :partId ORDER BY `order` ASC", {
             partId,
         }) as ExerciseRecordResults;
 
