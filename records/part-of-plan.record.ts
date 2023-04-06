@@ -66,16 +66,18 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
 
     async update(): Promise<void> {
 
+        const [rows] = await pool.execute("SELECT `slug` FROM `parts_of_plan`") as PartOfPlanRecordResults;
+        const existingSlugs = rows.map(row => row.slug as string);
+        const newSlug = slugify(this.slug || this.name, existingSlugs);
+        if (newSlug !== this.slug) {
+            this.slug = newSlug;
+        }
+
         await pool.execute("UPDATE `parts_of_plan` SET `name` = :name, `slug` = :slug WHERE `id` = :id", {
             id: this.id,
             name: this.name,
             slug: this.slug,
         });
-
-        const [results] = await pool.execute("SELECT `slug` FROM `parts_of_plan`") as PartOfPlanRecordResults;
-        const existingSlugs = results.map((row: any) => row.slug);
-
-        this.slug = slugify(this.slug || this.name, existingSlugs);
     }
 
     async delete(): Promise<void> {
