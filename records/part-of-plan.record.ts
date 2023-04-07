@@ -29,7 +29,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     }
 
     static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug", {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug ORDER BY `name` ASC", {
             slug,
         }) as PartOfPlanRecordResults;
 
@@ -59,7 +59,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = slugify(this.slug || this.name, existingSlugs);
         }
 
-        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`) VALUES(:id, :name, :slug)", this);
+        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`) VALUES(:id, :name, :slug) ORDER BY `name` ASC", this);
 
         return this.id;
     }
