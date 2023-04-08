@@ -2,7 +2,7 @@ export interface ExerciseEntity {
     id?: string;
     order: string;
     name: string;
-    series: number;
+    series: string;
     repetitions: string;
     pause: string;
     tips: string;

@@ -10,7 +10,7 @@ export class ExerciseRecord implements ExerciseEntity {
     public id: string;
     public order: string;
     public name: string;
-    public series: number;
+    public series: string;
     public repetitions: string;
     public pause: string;
     public tips: string;
@@ -19,7 +19,7 @@ export class ExerciseRecord implements ExerciseEntity {
 
 
     constructor(obj: ExerciseEntity) {
-        if (!obj.order || obj.order.length > 50) {
+        if (obj.order.length > 50) {
             throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 50 znaków.');
         }
 
@@ -27,19 +27,19 @@ export class ExerciseRecord implements ExerciseEntity {
             throw new ValidationError('Należy podać nazwę ćwiczenia o długości max. 100 znaków.');
         }
 
-        if (obj.series < 0 || obj.series > 127) {
-            throw new ValidationError('Ilość serii nie może być mniejsza niż 0 lub większa niż 127.');
+        if (obj.series.length > 50) {
+            throw new ValidationError('Należy podać ilość serii lub ich zakres o długości max. 50 znaków.');
         }
 
-        if (!obj.repetitions || obj.repetitions.length > 50) {
+        if (obj.repetitions.length > 50) {
             throw new ValidationError('Należy podać ilość powtórzeń lub ich zakres o długości max. 50 znaków.');
         }
 
-        if (!obj.pause || obj.pause.length > 50) {
+        if (obj.pause.length > 50) {
             throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 50 znaków.');
         }
 
-        if (!obj.tips || obj.tips.length > 500) {
+        if (obj.tips.length > 500) {
             throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 500 znaków.');
         }
 
