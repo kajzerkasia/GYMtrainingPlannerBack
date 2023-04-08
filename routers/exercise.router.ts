@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
-import {PartOfPlanRecord} from "../records/part-of-plan.record";
+const DOMPurify = require('isomorphic-dompurify');
 
 
 export const exerciseRouter = Router()
@@ -9,7 +9,7 @@ export const exerciseRouter = Router()
     .get('/exercises', async (req, res) => {
 
         if (typeof req.query.partId === 'string') {
-            return res.json(await ExerciseRecord.findAllWithPartId(req.query.partId))
+            return res.json(await ExerciseRecord.findAllWithPartId(DOMPurify.sanitize(req.query.partId)))
         }
 
         return res.json(await ExerciseRecord.findAll());
@@ -47,14 +47,14 @@ export const exerciseRouter = Router()
             throw new ValidationError('Nie znaleziono takiego ćwiczenia.');
         }
 
-        exercise.order = req.body.order;
-        exercise.name = req.body.name;
-        exercise.series = req.body.series;
-        exercise.repetitions = req.body.repetitions;
-        exercise.pause = req.body.pause;
-        exercise.tips = req.body.tips;
-        exercise.url = req.body.url;
-        exercise.partId = req.body.partId;
+        exercise.order = DOMPurify.sanitize(req.body.order);
+        exercise.name = DOMPurify.sanitize(req.body.name);
+        exercise.series = DOMPurify.sanitize(req.body.series);
+        exercise.repetitions = DOMPurify.sanitize(req.body.repetitions);
+        exercise.pause = DOMPurify.sanitize(req.body.pause);
+        exercise.tips = DOMPurify.sanitize(req.body.tips);
+        exercise.url = DOMPurify.sanitize(req.body.url);
+        exercise.partId = DOMPurify.sanitize(req.body.partId);
 
         await exercise.update();
 

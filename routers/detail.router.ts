@@ -1,6 +1,7 @@
 import {Router} from "express";
 import {ValidationError} from "../utils/errors";
 import {DetailRecord} from "../records/detail.record";
+const DOMPurify = require('isomorphic-dompurify');
 
 export const detailRouter = Router()
 
@@ -23,9 +24,9 @@ export const detailRouter = Router()
             throw new ValidationError('Nie znaleziono takiej informacji.');
         }
 
-        detail.length = req.body.length;
-        detail.frequency = req.body.frequency;
-        detail.schedule = req.body.schedule;
+        detail.length = DOMPurify.sanitize(req.body.length);
+        detail.frequency = DOMPurify.sanitize(req.body.frequency);
+        detail.schedule = DOMPurify.sanitize(req.body.schedule);
 
         await detail.update();
 

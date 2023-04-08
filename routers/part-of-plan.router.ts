@@ -1,15 +1,14 @@
 import {Router} from "express";
 import {PartOfPlanRecord} from "../records/part-of-plan.record";
 import {ValidationError} from "../utils/errors";
-import {ExerciseRecord} from "../records/exercise.record";
+const DOMPurify = require('isomorphic-dompurify');
 
 export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
-        // console.log(req.query.slug)
 
        if (typeof req.query.slug === 'string') {
-           return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
+           return res.json(await PartOfPlanRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
        }
 
         return res.json(await PartOfPlanRecord.findAll());
@@ -46,8 +45,8 @@ export const partOfPlanRouter = Router()
             throw new ValidationError('Nie znaleziono takiej części planu.');
         }
 
-        part.name = req.body.name;
-        part.slug = req.body.slug;
+        part.name = DOMPurify.sanitize(req.body.name);
+        part.slug = DOMPurify.sanitize(req.body.slug);
 
         await part.update();
 
