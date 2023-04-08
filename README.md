@@ -29,10 +29,11 @@ Training plan details:
 ![typescript](https://img.shields.io/badge/typescript%20-%23404d59.svg?logo=typescript&style=for-the-badge&logoColor=blue)
 ![node.js](https://img.shields.io/badge/node.js%20-%23404d59.svg?logo=node.js&style=for-the-badge&logoColor=green)
 ![Express.js](https://img.shields.io/badge/express.js%20-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![CSS](https://img.shields.io/badge/CSS%20-%23404d59.svg?&style=for-the-badge&logo=css3&logoColor=blue)
 ![npm](https://img.shields.io/badge/npm%20-%23404d59.svg?logo=npm&style=for-the-badge&logoColor=red)
 ![sql](https://img.shields.io/badge/sql%20-%23404d59.svg?logo=mysql&style=for-the-badge&logoColor=orange)
-![Jest](https://img.shields.io/badge/-jest%20-%23404d59.svg?style=for-the-badge&logo=jest&logoColor=white)
-![Git](https://img.shields.io/badge/git%20-%23404d59.svg?style=for-the-badge&logo=git&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest%20-%23404d59.svg?style=for-the-badge&logo=jest&logoColor=red)
+![Git](https://img.shields.io/badge/git%20-%23404d59.svg?style=for-the-badge&logo=git&logoColor=red)
 
 ## How to reach me
 
@@ -69,10 +70,11 @@ Szczegóły planu treningowego:
 ![typescript](https://img.shields.io/badge/typescript%20-%23404d59.svg?logo=typescript&style=for-the-badge&logoColor=blue)
 ![node.js](https://img.shields.io/badge/node.js%20-%23404d59.svg?logo=node.js&style=for-the-badge&logoColor=green)
 ![Express.js](https://img.shields.io/badge/express.js%20-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![CSS](https://img.shields.io/badge/CSS%20-%23404d59.svg?&style=for-the-badge&logo=css3&logoColor=blue)
 ![npm](https://img.shields.io/badge/npm%20-%23404d59.svg?logo=npm&style=for-the-badge&logoColor=red)
 ![sql](https://img.shields.io/badge/sql%20-%23404d59.svg?logo=mysql&style=for-the-badge&logoColor=orange)
-![Jest](https://img.shields.io/badge/-jest%20-%23404d59.svg?style=for-the-badge&logo=jest&logoColor=white)
-![Git](https://img.shields.io/badge/git%20-%23404d59.svg?style=for-the-badge&logo=git&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest%20-%23404d59.svg?style=for-the-badge&logo=jest&logoColor=red)
+![Git](https://img.shields.io/badge/git%20-%23404d59.svg?style=for-the-badge&logo=git&logoColor=red)
 
 ## Skontaktuj się ze mną
 
