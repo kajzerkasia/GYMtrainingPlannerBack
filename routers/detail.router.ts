@@ -20,10 +20,12 @@ export const detailRouter = Router()
         const detail = await DetailRecord.getOne(req.params.id);
 
         if (detail === null) {
-            throw new ValidationError('Nie znaleziono takiej zasady.');
+            throw new ValidationError('Nie znaleziono takiej informacji.');
         }
 
-        detail.name = req.body.name;
+        detail.length = req.body.length;
+        detail.frequency = req.body.frequency;
+        detail.schedule = req.body.schedule;
 
         await detail.update();
 

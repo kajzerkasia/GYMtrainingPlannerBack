@@ -8,15 +8,27 @@ type DetailRecordResults = [DetailEntity[], FieldPacket[]];
 
 export class DetailRecord implements DetailEntity {
     public id: string;
-    public name: string;
+    public length: string;
+    public frequency: string;
+    public schedule: string;
 
     constructor(obj: DetailEntity) {
-        if (!obj.name || obj.name.length > 500) {
-            throw new ValidationError('Należy podać zasadę progresji o długości max. 500 znaków.');
+        if (obj.length.length > 500) {
+            throw new ValidationError('Należy podać długość cyklu - max. 500 znaków.');
+        }
+
+        if (obj.frequency.length > 500) {
+            throw new ValidationError('Należy podać częstotliwość treningów o długości max. 500 znaków.');
+        }
+
+        if (obj.schedule.length > 500) {
+            throw new ValidationError('Należy podać rozkład treningów o max. 500 znaków.');
         }
 
         this.id = obj.id;
-        this.name = obj.name;
+        this.length = obj.length;
+        this.frequency = obj.frequency;
+        this.schedule = obj.schedule;
     }
 
     static async findAll(): Promise<DetailEntity[]> {
@@ -34,9 +46,11 @@ export class DetailRecord implements DetailEntity {
 
     async update() {
 
-        await pool.execute("UPDATE `plan_details` SET `name` = :name WHERE `id` = :id", {
+        await pool.execute("UPDATE `plan_details` SET `length` = :length, `frequency` = :frequency, `schedule` = :schedule WHERE `id` = :id", {
             id: this.id,
-            name: this.name,
+            length: this.length,
+            frequency: this.frequency,
+            schedule: this.schedule,
         });
 
     }

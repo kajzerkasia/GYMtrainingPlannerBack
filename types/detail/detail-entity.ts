@@ -1,4 +1,6 @@
 export interface DetailEntity {
     id?: string;
-    name: string;
+    length: string;
+    frequency: string;
+    schedule: string;
 }
