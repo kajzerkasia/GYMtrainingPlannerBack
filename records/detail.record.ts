@@ -13,16 +13,16 @@ export class DetailRecord implements DetailEntity {
     public schedule: string;
 
     constructor(obj: DetailEntity) {
-        if (obj.length.length > 500) {
-            throw new ValidationError('Należy podać długość cyklu - max. 500 znaków.');
+        if (obj.length.length > 34) {
+            throw new ValidationError('Należy podać długość cyklu - max. 34 znaki.');
         }
 
-        if (obj.frequency.length > 500) {
-            throw new ValidationError('Należy podać częstotliwość treningów o długości max. 500 znaków.');
+        if (obj.frequency.length > 34) {
+            throw new ValidationError('Należy podać częstotliwość treningów o długości max. 34 znaków.');
         }
 
-        if (obj.schedule.length > 500) {
-            throw new ValidationError('Należy podać rozkład treningów o max. 500 znaków.');
+        if (obj.schedule.length > 34) {
+            throw new ValidationError('Należy podać rozkład treningów o max. 34 znaków.');
         }
 
         this.id = obj.id;

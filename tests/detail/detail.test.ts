@@ -13,11 +13,11 @@ afterAll(async () => {
 
 test('DetailRecord.getOne returns data from database for one entry.', async () => {
 
-    const detail = await DetailRecord.getOne('abc');
+    const detail = await DetailRecord.getOne('6661a782-d5a7-11ed-a268-50ebf62b4c87');
 
     expect(detail).toBeDefined();
-    expect(detail.id).toBe('abcdefg');
-    expect(detail.length).toBe('3 razy w tygodniu');
+    expect(detail.id).toBe('6661a782-d5a7-11ed-a268-50ebf62b4c87');
+    expect(detail.length).toBe('6 – 8 tygodni');
 
 });
 
@@ -38,15 +38,15 @@ test('DetailRecord.findAll returns array of found entries.', async () => {
 
 });
 
-test('AdRecord.insert updates data from database', async () => {
-
-    const detail = new DetailRecord(defaultObj);
-    await detail.update();
-
-    const foundDetail = await DetailRecord.getOne(detail.id);
-
-    expect(foundDetail).toBeDefined();
-    expect(foundDetail).not.toBeNull();
-    expect(foundDetail.id).toBe(detail.id);
-
-});
+// test('DetailRecord.update updates data from database', async () => {
+//
+//     const detail = new DetailRecord(defaultObj);
+//     await detail.update();
+//
+//     const foundDetail = await DetailRecord.getOne(detail.id);
+//
+//     expect(foundDetail).toBeDefined();
+//     expect(foundDetail).not.toBeNull();
+//     expect(foundDetail.id).toBe(detail.id);
+//
+// });

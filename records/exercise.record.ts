@@ -19,32 +19,32 @@ export class ExerciseRecord implements ExerciseEntity {
 
 
     constructor(obj: ExerciseEntity) {
-        if (obj.order.length > 50) {
-            throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 50 znaków.');
+        if (obj.order.length > 12) {
+            throw new ValidationError('Należy podać kolejność wykonywania ćwiczeń o długości max. 12 znaków.');
         }
 
-        if (!obj.name || obj.name.length > 100) {
-            throw new ValidationError('Należy podać nazwę ćwiczenia o długości max. 100 znaków.');
+        if (!obj.name || obj.name.length > 32) {
+            throw new ValidationError('Należy podać nazwę ćwiczenia o długości max. 32 znaków.');
         }
 
-        if (obj.series.length > 50) {
-            throw new ValidationError('Należy podać ilość serii lub ich zakres o długości max. 50 znaków.');
+        if (obj.series.length > 10) {
+            throw new ValidationError('Należy podać ilość serii lub ich zakres o długości max. 10 znaków.');
         }
 
-        if (obj.repetitions.length > 50) {
-            throw new ValidationError('Należy podać ilość powtórzeń lub ich zakres o długości max. 50 znaków.');
+        if (obj.repetitions.length > 20) {
+            throw new ValidationError('Należy podać ilość powtórzeń lub ich zakres o długości max. 20 znaków.');
         }
 
-        if (obj.pause.length > 50) {
-            throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 50 znaków.');
+        if (obj.pause.length > 20) {
+            throw new ValidationError('Należy podać długość przerwy między seriami lub jej zakres o długości max. 20 znaków.');
         }
 
         if (obj.tips.length > 500) {
             throw new ValidationError('Należy podać wskazówki dotyczące ćwiczeń o długości max. 500 znaków.');
         }
 
-        if (obj.url.length > 100) {
-            throw new ValidationError('Link ogłoszenia nie może przekraczać 100 znaków.');
+        if (obj.url.length > 130) {
+            throw new ValidationError('Link do ćwiczenia nie może przekraczać 130 znaków.');
         }
 
         this.id = obj.id;
@@ -114,4 +114,6 @@ export class ExerciseRecord implements ExerciseEntity {
         })
     }
 }
+
+// TODO: Ogarnąć slugify
 
