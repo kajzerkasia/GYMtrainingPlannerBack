@@ -9,7 +9,7 @@ export const exerciseRouter = Router()
     .get('/exercises', async (req, res) => {
 
         if (typeof req.query.partId === 'string') {
-            return res.json(await ExerciseRecord.findAllWithPartId(DOMPurify.sanitize(req.query.partId)))
+            return res.json(await ExerciseRecord.findAllWithPartId(DOMPurify.sanitize(req.query.partId)));
         }
 
         return res.json(await ExerciseRecord.findAll());
