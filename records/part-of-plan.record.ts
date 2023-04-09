@@ -13,8 +13,8 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public slug: string;
 
     constructor(obj: PartOfPlanEntity, existingSlugs: string[] = []) {
-        if (!obj.name || obj.name.length > 100) {
-            throw new ValidationError('Należy podać nazwę części planu o długości max. 100 znaków.');
+        if (!obj.name || obj.name.length > 50) {
+            throw new ValidationError('Należy podać nazwę części planu o długości max. 50 znaków.');
         }
 
         this.id = obj.id;
@@ -81,7 +81,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     }
 
     async delete(): Promise<void> {
-        console.log(this.id)
+
         await pool.execute("DELETE FROM `parts_of_plan` WHERE `id` = :id", {
             id: this.id,
         })

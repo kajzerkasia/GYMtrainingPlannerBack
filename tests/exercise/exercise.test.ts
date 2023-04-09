@@ -18,15 +18,15 @@ afterAll(async () => {
     await pool.end();
 });
 
-// test('ExerciseRecord.getOne returns data from database for one entry.', async () => {
-//
-//     const exercise = await ExerciseRecord.getOne('abc');
-//
-//     expect(exercise).toBeDefined();
-//     expect(exercise.id).toBe('9e9fb4f3-6e3f-4cd9-87cf-dfe83d33f12b');
-//     expect(exercise.name).toBe('romanian deadlift');
-//
-// });
+test('ExerciseRecord.getOne returns data from database for one entry.', async () => {
+
+    const exercise = await ExerciseRecord.getOne('15adcb1a-5136-4644-a70d-bf91d7119794');
+
+    expect(exercise).toBeDefined();
+    expect(exercise.id).toBe('15adcb1a-5136-4644-a70d-bf91d7119794');
+    expect(exercise.name).toBe('romanian deadlift');
+
+});
 
 test('ExerciseRecord.getOne returns null from database for unexisting entry.', async () => {
 
