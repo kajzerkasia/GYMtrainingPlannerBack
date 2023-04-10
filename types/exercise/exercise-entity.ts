@@ -8,6 +8,7 @@ export interface ExerciseEntity {
     tips: string;
     url: string;
     partId?: string;
+    createdAt?: Date;
 }
 
 export enum Status {

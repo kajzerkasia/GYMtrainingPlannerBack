@@ -2,7 +2,6 @@ import {DetailEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
-import {v4 as uuid} from 'uuid';
 
 type DetailRecordResults = [DetailEntity[], FieldPacket[]];
 

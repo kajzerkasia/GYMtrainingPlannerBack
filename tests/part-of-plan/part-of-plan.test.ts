@@ -3,12 +3,7 @@ import {pool} from "../../utils/db";
 
 const defaultObj = {
     name: 'Trening A',
-    slug: 'A',
-}
-
-const defaultNextObj = {
-    name: 'Trening B',
-    slug: 'B',
+    slug: 'trening-a',
 }
 
 afterAll(async () => {
@@ -58,27 +53,3 @@ test('PartOfPlanRecord.findAllWithSlug returns empty array when searching for so
     expect(parts).toEqual([]);
 
 });
-
-// test('PartOfPlanRecord.insert returns new UUID.', async () => {
-//
-//     const part = new PartOfPlanRecord(defaultNextObj);
-//
-//     await part.insert();
-//
-//     expect(part.id).toBeDefined();
-//     expect(typeof part.id).toBe('string');
-//
-// });
-
-// test('PartOfPlanRecord.insert inserts data to database', async () => {
-//
-//     const part = new PartOfPlanRecord(defaultObj);
-//     await part.insert();
-//
-//     const foundPart = await PartOfPlanRecord.getOne(part.id);
-//
-//     expect(foundPart).toBeDefined();
-//     expect(foundPart).not.toBeNull();
-//     expect(foundPart.id).toBe(part.id);
-//
-// });
