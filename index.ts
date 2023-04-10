@@ -1,4 +1,4 @@
-import express, {json} from "express";
+import express, {json, Router} from "express";
 import cors from 'cors';
 import 'express-async-errors';
 import {handleError} from "./utils/errors";
@@ -7,12 +7,11 @@ import {exerciseRouter} from "./routers/exercise.router";
 import {ruleRouter} from "./routers/rule.router";
 import {partOfPlanRouter} from "./routers/part-of-plan.router";
 import {detailRouter} from "./routers/detail.router";
-import {config} from "./config/config";
 
 const app = express();
 
 app.use(cors({
-    origin: config.corsOrigin,
+    origin: 'http://localhost:3000',
 }));
 
 app.use(json());
@@ -22,10 +21,14 @@ app.use(rateLimit({
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 }))
 
-app.use('/add-exercise', exerciseRouter);
-app.use('/add-rule', ruleRouter);
-app.use('/add-part', partOfPlanRouter);
-app.use('/add-detail', detailRouter);
+const router = Router();
+
+router.use('/add-exercise', exerciseRouter);
+router.use('/add-rule', ruleRouter);
+router.use('/add-part', partOfPlanRouter);
+router.use('/add-detail', detailRouter);
+
+app.use('/api', router);
 
 app.use(handleError);
 
