@@ -1,6 +1,6 @@
 
 export const slugify = (str: string, existingSlugs: string[] = []): string => {
-    // remove polish letters
+    // remove polish letters //
     str = str.replace(/[ąĄ]/g, 'a')
         .replace(/[ćĆ]/g, 'c')
         .replace(/[ęĘ]/g, 'e')
