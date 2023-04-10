@@ -2,6 +2,7 @@ import {DetailEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
+import {v4 as uuid} from "uuid";
 
 type DetailRecordResults = [DetailEntity[], FieldPacket[]];
 
@@ -44,6 +45,10 @@ export class DetailRecord implements DetailEntity {
     }
 
     async update() {
+
+        if (!this.id) {
+            this.id = uuid();
+        }
 
         await pool.execute("UPDATE `plan_details` SET `length` = :length, `frequency` = :frequency, `schedule` = :schedule WHERE `id` = :id", {
             id: this.id,
