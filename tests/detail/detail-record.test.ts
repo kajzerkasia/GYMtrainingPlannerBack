@@ -2,16 +2,16 @@ import {DetailRecord} from "../../records/detail.record";
 
 const defaultObj = {
     length: 'Test Length',
-    frequency: 'blah',
-    schedule: 'xxx',
+    frequency: 'abc',
+    schedule: 'def',
 }
 
 test('Can build DetailRecord', () => {
     const detail = new DetailRecord(defaultObj);
 
     expect(detail.length).toBe('Test Length');
-    expect(detail.frequency).toBe('blah');
-    expect(detail.schedule).toBe('xxx');
+    expect(detail.frequency).toBe('abc');
+    expect(detail.schedule).toBe('def');
 });
 
 test('Validates invalid length of length - too long.', () => {

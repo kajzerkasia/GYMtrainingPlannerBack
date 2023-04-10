@@ -13,6 +13,7 @@ export const detailRouter = Router()
 
     .get('/details/:id', async (req, res) => {
         const detail = await DetailRecord.getOne(req.params.id);
+
         res.json(detail);
     })
 

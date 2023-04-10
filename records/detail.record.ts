@@ -51,7 +51,6 @@ export class DetailRecord implements DetailEntity {
             frequency: this.frequency,
             schedule: this.schedule,
         });
-
     }
 }
 

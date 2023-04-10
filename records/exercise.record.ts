@@ -117,5 +117,3 @@ export class ExerciseRecord implements ExerciseEntity {
     }
 }
 
-// TODO: Ogarnąć slugify
-

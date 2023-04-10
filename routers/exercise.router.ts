@@ -18,12 +18,14 @@ export const exerciseRouter = Router()
 
     .get('/exercises/:id', async (req, res) => {
         const exercise = await ExerciseRecord.getOne(req.params.id);
+
         res.json(exercise);
     })
 
     .post('/exercises', async (req, res) => {
         const exercise = new ExerciseRecord(req.body);
         await exercise.insert();
+
         res.json(exercise);
     })
 

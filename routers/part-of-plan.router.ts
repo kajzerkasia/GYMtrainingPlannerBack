@@ -16,12 +16,14 @@ export const partOfPlanRouter = Router()
 
     .get('/plans/:id', async (req, res) => {
         const part = await PartOfPlanRecord.getOne(req.params.id);
+
         res.json(part);
     })
 
     .post('/plans', async (req, res) => {
         const part = new PartOfPlanRecord(req.body);
         await part.insert();
+
         res.json(part);
     })
 
