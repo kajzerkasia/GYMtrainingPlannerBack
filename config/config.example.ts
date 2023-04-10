@@ -3,4 +3,5 @@
 //     dbUser: 'user',
 //     password: 'password',
 //     dbDatabase: 'database',
+//     corsOrigin: 'http://localhost:3000'
 // };

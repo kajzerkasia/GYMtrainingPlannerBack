@@ -7,11 +7,12 @@ import {exerciseRouter} from "./routers/exercise.router";
 import {ruleRouter} from "./routers/rule.router";
 import {partOfPlanRouter} from "./routers/part-of-plan.router";
 import {detailRouter} from "./routers/detail.router";
+import {config} from "./config/config";
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: config.corsOrigin,
 }));
 
 app.use(json());
