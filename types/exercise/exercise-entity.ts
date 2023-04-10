@@ -2,12 +2,13 @@ export interface ExerciseEntity {
     id?: string;
     order: string;
     name: string;
-    series: number;
+    series: string;
     repetitions: string;
     pause: string;
     tips: string;
     url: string;
     partId?: string;
+    createdAt?: Date;
 }
 
 export enum Status {

@@ -12,12 +12,14 @@ export const ruleRouter = Router()
 
     .get('/rules/:id', async (req, res) => {
         const rule = await RuleRecord.getOne(req.params.id);
+
         res.json(rule);
     })
 
     .post('/rules', async (req, res) => {
         const rule = new RuleRecord(req.body);
         await rule.insert();
+
         res.json(rule);
     })
 

@@ -11,25 +11,27 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public id: string;
     public name: string;
     public slug: string;
+    public createdAt: Date;
 
     constructor(obj: PartOfPlanEntity, existingSlugs: string[] = []) {
-        if (!obj.name || obj.name.length > 100) {
-            throw new ValidationError('Należy podać nazwę części planu o długości max. 100 znaków.');
+        if (!obj.name || obj.name.length > 50) {
+            throw new ValidationError('Należy podać nazwę części planu o długości max. 50 znaków.');
         }
 
         this.id = obj.id;
         this.name = obj.name;
         this.slug = slugify(obj.slug || obj.name, existingSlugs);
+        this.createdAt = obj.createdAt;
     }
 
     static async findAll(): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` ORDER BY `name` ASC") as PartOfPlanRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` ORDER BY `createdAt` ASC") as PartOfPlanRecordResults;
 
         return results.map(obj => new PartOfPlanRecord(obj));
     }
 
     static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug ORDER BY `name` ASC", {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug ORDER BY `createdAt` ASC", {
             slug,
         }) as PartOfPlanRecordResults;
 
@@ -45,8 +47,9 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
 
     async insert(): Promise<string> {
 
-        if (!this.id) {
+        if (!this.id || !this.createdAt) {
             this.id = uuid();
+            this.createdAt = new Date();
 
         } else {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
@@ -59,7 +62,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = slugify(this.slug || this.name, existingSlugs);
         }
 
-        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`) VALUES(:id, :name, :slug) ORDER BY `name` ASC", this);
+        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
 
         return this.id;
     }
@@ -81,7 +84,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     }
 
     async delete(): Promise<void> {
-        console.log(this.id)
+
         await pool.execute("DELETE FROM `parts_of_plan` WHERE `id` = :id", {
             id: this.id,
         })

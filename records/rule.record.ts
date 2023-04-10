@@ -9,6 +9,7 @@ type RuleRecordResults = [RuleEntity[], FieldPacket[]];
 export class RuleRecord implements RuleEntity {
     public id: string;
     public rule: string;
+    public createdAt: Date;
 
     constructor(obj: RuleEntity) {
         if (!obj.rule || obj.rule.length > 500) {
@@ -17,10 +18,11 @@ export class RuleRecord implements RuleEntity {
 
         this.id = obj.id;
         this.rule = obj.rule;
+        this.createdAt = obj.createdAt;
     }
 
     static async findAll(): Promise<RuleEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `progression_rules`") as RuleRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `progression_rules` ORDER BY `createdAt` ASC") as RuleRecordResults;
 
         return results.map(obj => new RuleRecord(obj));
     }
@@ -33,13 +35,15 @@ export class RuleRecord implements RuleEntity {
     }
 
     async insert(): Promise<void> {
-        if (!this.id) {
+        if (!this.id || !this.createdAt) {
             this.id = uuid();
+            this.createdAt = new Date();
+
         } else {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `progression_rules`(`id`, `rule`) VALUES(:id, :rule)", this);
+        await pool.execute("INSERT INTO `progression_rules`(`id`, `rule`, `createdAt`) VALUES(:id, :rule, :createdAt)", this);
     }
 
     async update() {

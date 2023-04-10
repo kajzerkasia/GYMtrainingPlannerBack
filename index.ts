@@ -6,11 +6,13 @@ import rateLimit from 'express-rate-limit'
 import {exerciseRouter} from "./routers/exercise.router";
 import {ruleRouter} from "./routers/rule.router";
 import {partOfPlanRouter} from "./routers/part-of-plan.router";
+import {detailRouter} from "./routers/detail.router";
+import {config} from "./config/config";
 
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: config.corsOrigin,
 }));
 
 app.use(json());
@@ -23,6 +25,7 @@ app.use(rateLimit({
 app.use('/add-exercise', exerciseRouter);
 app.use('/add-rule', ruleRouter);
 app.use('/add-part', partOfPlanRouter);
+app.use('/add-detail', detailRouter);
 
 app.use(handleError);
 
