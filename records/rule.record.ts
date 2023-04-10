@@ -22,7 +22,7 @@ export class RuleRecord implements RuleEntity {
     }
 
     static async findAll(): Promise<RuleEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `progression_rules`") as RuleRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `progression_rules` ORDER BY `createdAt` ASC") as RuleRecordResults;
 
         return results.map(obj => new RuleRecord(obj));
     }

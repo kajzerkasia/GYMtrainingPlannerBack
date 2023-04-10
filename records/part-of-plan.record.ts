@@ -31,7 +31,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     }
 
     static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug", {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug ORDER BY `createdAt` ASC", {
             slug,
         }) as PartOfPlanRecordResults;
 
