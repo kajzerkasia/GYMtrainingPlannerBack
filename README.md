@@ -1,5 +1,8 @@
 # Gym Training Planner 🏋️‍♀️💪
 
+# ❤️DEMO❤️
+# https://kk.networkmanager.pl/
+
 ## Polish version of README:
 
 #### Trenujesz na siłowni i potrzebujesz uporządkować swój plan treningowy?
@@ -41,7 +44,7 @@ Składa się z następujących części i możliwości:
 
 #### Kliknij w screen poniżej aby przejść do filmu, który przedstawia działanie aplikacji. ⬇️⬇️⬇️
 
-[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/71d6PY5Z51o)
+[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/fUGJYWbEydE)
 
 ## Zastosowane technologie:
 
@@ -81,6 +84,9 @@ Aby mieć czas na tworzenie tego projektu, zrezygnowałam z chodzenia na siłown
 #
 
 # Gym Training Planner 🏋️‍♀️💪
+
+# ❤️DEMO❤️
+# https://kk.networkmanager.pl/
 
 ## English version of README:
 
@@ -123,7 +129,7 @@ Training plan details:
 
 #### Click on the screen below to go to the video that shows how the application works. ⬇️⬇️⬇️
 
-[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/71d6PY5Z51o)
+[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/fUGJYWbEydE)
 
 ## Technologies used
 
@@ -157,5 +163,5 @@ In order to have time to create this project, I gave up the gym 👌
 ## How to reach me
 
 [<img src="https://img.shields.io/badge/linked%20in-%23404d59.svg?logo=linkedin&style=for-the-badge&logoColor=blue" alt="linked in" />](https://www.linkedin.com/in/katarzyna-kajzer/)
- 
+
 
