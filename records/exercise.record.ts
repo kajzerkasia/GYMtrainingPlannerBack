@@ -3,6 +3,7 @@ import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {v4 as uuid} from 'uuid';
+import {isValidUrl} from "../utils/url-validation";
 
 type ExerciseRecordResults = [ExerciseEntity[], FieldPacket[]];
 
@@ -87,6 +88,10 @@ export class ExerciseRecord implements ExerciseEntity {
             this.createdAt = new Date();
         } else {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
+        }
+
+        if (!isValidUrl(this.url)) {
+            throw new ValidationError('Podany URL jest nieprawidłowy.');
         }
 
         await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`, `partId`, `createdAt`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url, :partId, :createdAt)", this);
