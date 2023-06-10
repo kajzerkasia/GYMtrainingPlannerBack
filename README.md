@@ -65,7 +65,7 @@ Składa się z następujących części i możliwości:
 #### *czego nie zdążyłam zrobić ze względu na deadline?
 * dodać więcej testów
 * uporządkować style
-* dodać walidację adresu URL przy dodawaniu
+* dodać walidację adresu URL przy dodawaniu (zrobione na wersji developerskiej)
 * dodać sanitize na frontendzie
 * dodać więcej obsługi błędów
 
@@ -154,7 +154,7 @@ Training plan details:
 #### *what I didn't manage to do because of the deadline?
 * add more tests
 * organize styles
-* add url validation on add
+* add url validation on add (made on development version)
 * add sanitize on frontend
 * add more error handling
 
