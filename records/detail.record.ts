@@ -58,4 +58,3 @@ export class DetailRecord implements DetailEntity {
         });
     }
 }
-

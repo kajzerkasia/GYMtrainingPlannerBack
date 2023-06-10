@@ -1,5 +1,8 @@
 # Gym Training Planner 🏋️‍♀️💪
 
+## ❤️DEMO❤️
+## https://kk.networkmanager.pl/
+
 ## Polish version of README:
 
 #### Trenujesz na siłowni i potrzebujesz uporządkować swój plan treningowy?
@@ -35,13 +38,16 @@ Składa się z następujących części i możliwości:
 ✔
 
 #
+##### Dane są pobierane z bazy danych i zapisywane w niej ✅
+
+#
 # Gym Training Planner 🏋️‍♀️💪
 
 #### Jest to projekt zaliczeniowy, który stworzyłam w ramach kursu programistycznego "MegaK".
 
 #### Kliknij w screen poniżej aby przejść do filmu, który przedstawia działanie aplikacji. ⬇️⬇️⬇️
 
-[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/71d6PY5Z51o)
+[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/fUGJYWbEydE)
 
 ## Zastosowane technologie:
 
@@ -67,6 +73,7 @@ Składa się z następujących części i możliwości:
 * możliwość dodawania większej ilości planów treningowych
 * tryb admina (trenera) i tryb użytkownika (podopiecznego)
 * dodanie kalendarza do planowania treningów w dane dni oraz zaznaczania początku i końca planu treningowego
+* możliwość zapisywania swoich postępów przez podopiecznych
 
 ## Fun fact 🤡
 
@@ -81,6 +88,9 @@ Aby mieć czas na tworzenie tego projektu, zrezygnowałam z chodzenia na siłown
 #
 
 # Gym Training Planner 🏋️‍♀️💪
+
+## ❤️DEMO❤️
+## https://kk.networkmanager.pl/
 
 ## English version of README:
 
@@ -117,13 +127,16 @@ Training plan details:
 ✔
 
 #
+##### The data is retrieved from the database and stored in it ✅
+
+#
 # Gym Training Planner 🏋️‍♀️💪
 
 #### This is a final project that I created as part of the "MegaK" programming course.
 
 #### Click on the screen below to go to the video that shows how the application works. ⬇️⬇️⬇️
 
-[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/71d6PY5Z51o)
+[![Watch the video](/utils/assets/gym-training-planner-preview.png)](https://youtu.be/fUGJYWbEydE)
 
 ## Technologies used
 
@@ -141,7 +154,7 @@ Training plan details:
 #### *what I didn't manage to do because of the deadline?
 * add more tests
 * organize styles
-* *add url validation on add
+* add url validation on add
 * add sanitize on frontend
 * add more error handling
 
@@ -149,6 +162,7 @@ Training plan details:
 * the ability to add more training plans
 * admin (trainer) and user (protege) mode
 * adding a calendar for planning training on given days and marking the beginning and end of the training plan
+* proteges can save their progress
 
 ## Fun fact 🤡
 
@@ -157,5 +171,5 @@ In order to have time to create this project, I gave up the gym 👌
 ## How to reach me
 
 [<img src="https://img.shields.io/badge/linked%20in-%23404d59.svg?logo=linkedin&style=for-the-badge&logoColor=blue" alt="linked in" />](https://www.linkedin.com/in/katarzyna-kajzer/)
- 
+
 
