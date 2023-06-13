@@ -7,9 +7,9 @@ export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
 
-       if (typeof req.query.slug === 'string') {
-           return res.json(await PartOfPlanRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
-       }
+        if (typeof req.query.planId === 'string') {
+            return res.json(await PartOfPlanRecord.findAllWithPlanId(req.query.planId));
+        }
 
         return res.json(await PartOfPlanRecord.findAll());
     })

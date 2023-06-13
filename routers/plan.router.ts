@@ -1,13 +1,17 @@
 import {Router} from "express";
 import {ValidationError} from "../utils/errors";
 import {PlanRecord} from "../records/plan.record";
+import DOMPurify from "isomorphic-dompurify";
 
 export const planRouter = Router()
 
     .get('/list', async (req, res) => {
-        const plans = await PlanRecord.findAll();
 
-        res.json(plans);
+        if (typeof req.query.slug === 'string') {
+            return res.json(await PlanRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
+        }
+
+        return res.json(await PlanRecord.findAll());
     })
 
     .get('/list/:id', async (req, res) => {
@@ -35,7 +39,7 @@ export const planRouter = Router()
         res.end();
     })
 
-    .put('/rules/:id', async (req, res) => {
+    .put('/list/:id', async (req, res) => {
 
         const plan = await PlanRecord.getOne(req.params.id);
 
@@ -43,7 +47,8 @@ export const planRouter = Router()
             throw new ValidationError('Nie znaleziono takiego planu.');
         }
 
-        plan.name = req.body.plan;
+        plan.name = DOMPurify.sanitize(req.body.name);
+        plan.slug = DOMPurify.sanitize(req.body.slug);
 
         await plan.update();
 
