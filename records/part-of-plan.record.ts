@@ -11,6 +11,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public id: string;
     public name: string;
     public slug: string;
+    public planId: string;
     public createdAt: Date;
 
     constructor(obj: PartOfPlanEntity, existingSlugs: string[] = []) {
@@ -21,6 +22,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.id = obj.id;
         this.name = obj.name;
         this.slug = slugify(obj.slug || obj.name, existingSlugs);
+        this.planId = obj.planId;
         this.createdAt = obj.createdAt;
     }
 
@@ -30,9 +32,9 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         return results.map(obj => new PartOfPlanRecord(obj));
     }
 
-    static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug ORDER BY `createdAt` ASC", {
-            slug,
+    static async findAllWithPlanId(planId: string): Promise<PartOfPlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `planId` = :planId ORDER BY `createdAt` ASC", {
+            planId,
         }) as PartOfPlanRecordResults;
 
         return results.map(obj => new PartOfPlanRecord(obj));

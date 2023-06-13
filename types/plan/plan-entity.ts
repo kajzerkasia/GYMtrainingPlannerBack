@@ -1,7 +1,6 @@
-export interface PartOfPlanEntity {
+export interface PlanEntity {
     id?: string;
     name: string;
     slug?: string;
-    planId?: string;
     createdAt?: Date;
 }

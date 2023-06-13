@@ -8,6 +8,7 @@ import {ruleRouter} from "./routers/rule.router";
 import {partOfPlanRouter} from "./routers/part-of-plan.router";
 import {detailRouter} from "./routers/detail.router";
 import {config} from "./config/config";
+import {planRouter} from "./routers/plan.router";
 
 const app = express();
 
@@ -28,6 +29,7 @@ router.use('/add-exercise', exerciseRouter);
 router.use('/add-rule', ruleRouter);
 router.use('/add-part', partOfPlanRouter);
 router.use('/add-detail', detailRouter);
+router.use('/add-plan', planRouter);
 
 app.use('/api', router);
 
