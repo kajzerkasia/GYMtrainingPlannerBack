@@ -14,6 +14,16 @@ export const partOfPlanRouter = Router()
         return res.json(await PartOfPlanRecord.findAll());
     })
 
+    .get('/plans', async (req, res) => {
+        console.log(req.query.slug)
+
+        if (typeof req.query.slug === 'string') {
+            return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
+        }
+
+        return res.json(await PartOfPlanRecord.findAll());
+    })
+
     .get('/plans/:id', async (req, res) => {
         const part = await PartOfPlanRecord.getOne(req.params.id);
 

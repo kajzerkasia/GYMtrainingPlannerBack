@@ -40,6 +40,14 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         return results.map(obj => new PartOfPlanRecord(obj));
     }
 
+    static async findAllWithSlug(slug: string): Promise<PartOfPlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `slug` = :slug", {
+            slug,
+        }) as PartOfPlanRecordResults;
+
+        return results.map(obj => new PartOfPlanRecord(obj));
+    }
+
     static async getOne(id: string): Promise<PartOfPlanRecord | null> {
         const [results] = await pool.execute("SELECT * from `parts_of_plan` WHERE `id` = :id", {
             id,
@@ -64,7 +72,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = slugify(this.slug || this.name, existingSlugs);
         }
 
-        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
+        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `planId`, `createdAt`) VALUES(:id, :name, :slug, :planId, :createdAt)", this);
 
         return this.id;
     }
@@ -78,10 +86,11 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = newSlug;
         }
 
-        await pool.execute("UPDATE `parts_of_plan` SET `name` = :name, `slug` = :slug WHERE `id` = :id", {
+        await pool.execute("UPDATE `parts_of_plan` SET `name` = :name, `slug` = :slug, `planId` = :planId WHERE `id` = :id", {
             id: this.id,
             name: this.name,
             slug: this.slug,
+            planId: this.planId,
         });
     }
 
