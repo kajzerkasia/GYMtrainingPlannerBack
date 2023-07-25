@@ -5,6 +5,7 @@ import {FieldPacket} from "mysql2";
 import {v4 as uuid} from 'uuid';
 import {slugify} from "../utils/slugify";
 
+
 type PlanRecordResults = [PlanEntity[], FieldPacket[]];
 
 export class PlanRecord implements PlanEntity {
@@ -62,7 +63,6 @@ export class PlanRecord implements PlanEntity {
         }
 
         await pool.execute("INSERT INTO `plans_list`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
-
     }
 
     async update() {
