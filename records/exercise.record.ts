@@ -91,7 +91,7 @@ export class ExerciseRecord implements ExerciseEntity {
         }
 
         if (!isValidUrl(this.url)) {
-            throw new ValidationError('Podany URL jest nieprawidłowy.');
+            throw new ValidationError('Podany adres URL jest nieprawidłowy.');
         }
 
         await pool.execute("INSERT INTO `plans`(`id`, `order`, `name`, `series`, `repetitions`, `pause`, `tips`, `url`, `partId`, `createdAt`) VALUES(:id, :order, :name, :series, :repetitions, :pause, :tips, :url, :partId, :createdAt)", this);

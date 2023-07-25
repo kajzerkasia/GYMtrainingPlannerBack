@@ -6,22 +6,14 @@ const DOMPurify = require('isomorphic-dompurify');
 export const partOfPlanRouter = Router()
 
     .get('/plans', async (req, res) => {
-
         if (typeof req.query.planId === 'string') {
             return res.json(await PartOfPlanRecord.findAllWithPlanId(req.query.planId));
-        }
-
-        return res.json(await PartOfPlanRecord.findAll());
-    })
-
-    .get('/plans', async (req, res) => {
-        console.log(req.query.slug)
-
-        if (typeof req.query.slug === 'string') {
+        } else if (typeof req.query.slug === 'string') {
+            console.log(req.query.slug);
             return res.json(await PartOfPlanRecord.findAllWithSlug(req.query.slug));
+        } else {
+            return res.json(await PartOfPlanRecord.findAll());
         }
-
-        return res.json(await PartOfPlanRecord.findAll());
     })
 
     .get('/plans/:id', async (req, res) => {
