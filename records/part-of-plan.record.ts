@@ -11,6 +11,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     public id: string;
     public name: string;
     public slug: string;
+    public planId: string;
     public createdAt: Date;
 
     constructor(obj: PartOfPlanEntity, existingSlugs: string[] = []) {
@@ -21,11 +22,20 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
         this.id = obj.id;
         this.name = obj.name;
         this.slug = slugify(obj.slug || obj.name, existingSlugs);
+        this.planId = obj.planId;
         this.createdAt = obj.createdAt;
     }
 
     static async findAll(): Promise<PartOfPlanEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `parts_of_plan` ORDER BY `createdAt` ASC") as PartOfPlanRecordResults;
+
+        return results.map(obj => new PartOfPlanRecord(obj));
+    }
+
+    static async findAllWithPlanId(planId: string): Promise<PartOfPlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `parts_of_plan` WHERE `planId` = :planId ORDER BY `createdAt` ASC", {
+            planId,
+        }) as PartOfPlanRecordResults;
 
         return results.map(obj => new PartOfPlanRecord(obj));
     }
@@ -62,7 +72,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = slugify(this.slug || this.name, existingSlugs);
         }
 
-        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
+        await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `planId`, `createdAt`) VALUES(:id, :name, :slug, :planId, :createdAt)", this);
 
         return this.id;
     }
@@ -76,10 +86,11 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
             this.slug = newSlug;
         }
 
-        await pool.execute("UPDATE `parts_of_plan` SET `name` = :name, `slug` = :slug WHERE `id` = :id", {
+        await pool.execute("UPDATE `parts_of_plan` SET `name` = :name, `slug` = :slug, `planId` = :planId WHERE `id` = :id", {
             id: this.id,
             name: this.name,
             slug: this.slug,
+            planId: this.planId,
         });
     }
 
