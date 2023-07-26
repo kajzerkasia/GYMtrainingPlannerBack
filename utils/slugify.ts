@@ -1,6 +1,5 @@
-
 export const slugify = (str: string, existingSlugs: string[] = []): string => {
-    // remove polish letters
+    // Usuń polskie znaki
     str = str.replace(/[ąĄ]/g, 'a')
         .replace(/[ćĆ]/g, 'c')
         .replace(/[ęĘ]/g, 'e')
@@ -15,10 +14,14 @@ export const slugify = (str: string, existingSlugs: string[] = []): string => {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
 
-    // check if slug already exists
+    // Sprawdź, czy slug już istnieje wśród istniejących slugów
+    if (!existingSlugs.includes(slug)) {
+        return slug;
+    }
+
+    // Jeśli slug już istnieje, dodaj liczbę, aby uniknąć duplikatów
     let num = 2;
     let baseSlug = slug;
-
     while (existingSlugs.includes(slug)) {
         slug = `${baseSlug}-${num}`;
         num++;
