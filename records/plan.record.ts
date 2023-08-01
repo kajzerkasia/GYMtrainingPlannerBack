@@ -14,7 +14,7 @@ export class PlanRecord implements PlanEntity {
     public createdAt: Date;
 
     constructor(obj: PlanEntity, existingSlugs: string[] = []) {
-        if (!obj.name || obj.name.length > 100) {
+        if (!obj.name || obj.name.length > 50) {
             throw new ValidationError('Należy podać nazwę planu treningowego o długości max. 50 znaków.');
         }
 
