@@ -44,6 +44,8 @@ export const eventRouter = Router()
 
         event.planName = req.body.planName;
         event.partName = req.body.partName;
+        event.startDate = req.body.startDate;
+        event.endDate = req.body.endDate;
 
         await event.update();
 
