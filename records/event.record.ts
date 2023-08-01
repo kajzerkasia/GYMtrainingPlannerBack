@@ -10,7 +10,8 @@ export class EventRecord implements EventEntity {
     public id: string;
     public planName: string;
     public partName: string;
-    public date: Date;
+    public startDate: Date;
+    public endDate: Date;
 
     constructor(obj: EventEntity) {
         if (!obj.planName || obj.planName.length > 50) {
@@ -23,7 +24,8 @@ export class EventRecord implements EventEntity {
         this.id = obj.id;
         this.planName = obj.planName;
         this.partName = obj.partName;
-        this.date = obj.date;
+        this.startDate = obj.startDate;
+        this.endDate = obj.endDate;
     }
 
     static async findAll(): Promise<EventEntity[]> {
@@ -46,12 +48,12 @@ export class EventRecord implements EventEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `events`(`id`, `planName`, `partName`, `date`) VALUES(:id, :planName, :partName, :date)", this);
+        await pool.execute("INSERT INTO `events`(`id`, `planName`, `partName`, `startDate`, `endDate`) VALUES(:id, :planName, :partName, :startDate, :endDate)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `events` SET `planName` = :planName, `partName` = :partName WHERE `id` = :id", {
+        await pool.execute("UPDATE `events` SET `planName` = :planName, `partName` = :partName, `startDate` = :startDate, `endDate` = :endDate WHERE `id` = :id", {
             id: this.id,
             planName: this.planName,
             partName: this.partName,
