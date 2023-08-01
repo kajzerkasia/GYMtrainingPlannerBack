@@ -56,21 +56,17 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
     }
 
     async insert(): Promise<string> {
-
         if (!this.id || !this.createdAt) {
             this.id = uuid();
             this.createdAt = new Date();
-
         } else {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        if (!this.slug) {
-            const [results] = await pool.execute("SELECT `slug` FROM `parts_of_plan`") as PartOfPlanRecordResults;
-            const existingSlugs = results.map((row: any) => row.slug);
+        const [results] = await pool.execute("SELECT `slug` FROM `parts_of_plan`") as PartOfPlanRecordResults;
+        const existingSlugs = results.map((row: any) => row.slug);
 
-            this.slug = slugify(this.slug || this.name, existingSlugs);
-        }
+        this.slug = slugify(this.slug || this.name, existingSlugs);
 
         await pool.execute("INSERT INTO `parts_of_plan`(`id`, `name`, `slug`, `planId`, `createdAt`) VALUES(:id, :name, :slug, :planId, :createdAt)", this);
 
@@ -81,6 +77,7 @@ export class PartOfPlanRecord implements PartOfPlanEntity {
 
         const [rows] = await pool.execute("SELECT `slug` FROM `parts_of_plan`") as PartOfPlanRecordResults;
         const existingSlugs = rows.map(row => row.slug as string);
+
         const newSlug = slugify(this.slug || this.name, existingSlugs);
         if (newSlug !== this.slug) {
             this.slug = newSlug;
