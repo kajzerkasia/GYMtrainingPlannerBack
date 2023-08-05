@@ -57,6 +57,8 @@ export class EventRecord implements EventEntity {
             id: this.id,
             planName: this.planName,
             partName: this.partName,
+            startDate: this.startDate,
+            endDate: this.endDate,
         });
 
     }

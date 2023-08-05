@@ -42,10 +42,14 @@ export const eventRouter = Router()
             throw new ValidationError('Nie znaleziono takiego wydarzenia.');
         }
 
+        // console.log("Przed aktualizacją:", event);
+
         event.planName = req.body.planName;
         event.partName = req.body.partName;
-        event.startDate = req.body.startDate;
-        event.endDate = req.body.endDate;
+        event.startDate = new Date(req.body.startDate);
+        event.endDate = new Date(req.body.endDate);
+
+        // console.log("Po aktualizacji:", event);
 
         await event.update();
 
