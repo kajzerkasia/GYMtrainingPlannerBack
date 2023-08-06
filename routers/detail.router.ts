@@ -6,9 +6,11 @@ const DOMPurify = require('isomorphic-dompurify');
 export const detailRouter = Router()
 
     .get('/details', async (req, res) => {
-        const details = await DetailRecord.findAll();
-
-        res.json(details);
+        if (typeof req.query.planId === 'string') {
+            return res.json(await DetailRecord.findAllWithPlanId(req.query.planId));
+        } else {
+            return res.json(await DetailRecord.findAll());
+        }
     })
 
     .get('/details/:id', async (req, res) => {
@@ -33,3 +35,4 @@ export const detailRouter = Router()
 
         res.json(detail);
     })
+

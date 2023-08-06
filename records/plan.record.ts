@@ -63,6 +63,7 @@ export class PlanRecord implements PlanEntity {
         }
 
         await pool.execute("INSERT INTO `plans_list`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
+        await pool.execute("INSERT INTO `plan_details`(`id`, `length`, `frequency`, `schedule`, `planId`) VALUES(:id, NULL, NULL, NULL, :planId)", { id: uuid(), planId: this.id });
     }
 
     async update() {

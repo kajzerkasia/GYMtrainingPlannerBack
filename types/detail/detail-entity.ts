@@ -3,4 +3,5 @@ export interface DetailEntity {
     length: string;
     frequency: string;
     schedule: string;
+    planId?: string;
 }

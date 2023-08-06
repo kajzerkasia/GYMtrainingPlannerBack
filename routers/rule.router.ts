@@ -5,9 +5,11 @@ import {ValidationError} from "../utils/errors";
 export const ruleRouter = Router()
 
     .get('/rules', async (req, res) => {
-        const rule = await RuleRecord.findAll();
-
-        res.json(rule);
+        if (typeof req.query.planId === 'string') {
+            return res.json(await RuleRecord.findAllWithPlanId(req.query.planId));
+        } else {
+            return res.json(await RuleRecord.findAll());
+        }
     })
 
     .get('/rules/:id', async (req, res) => {

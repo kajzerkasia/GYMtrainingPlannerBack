@@ -10,6 +10,7 @@ export class RuleRecord implements RuleEntity {
     public id: string;
     public rule: string;
     public createdAt: Date;
+    public planId: string;
 
     constructor(obj: RuleEntity) {
         if (!obj.rule || obj.rule.length > 500) {
@@ -19,10 +20,19 @@ export class RuleRecord implements RuleEntity {
         this.id = obj.id;
         this.rule = obj.rule;
         this.createdAt = obj.createdAt;
+        this.planId = obj.planId;
     }
 
     static async findAll(): Promise<RuleEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `progression_rules` ORDER BY `createdAt` ASC") as RuleRecordResults;
+
+        return results.map(obj => new RuleRecord(obj));
+    }
+
+    static async findAllWithPlanId(planId: string): Promise<RuleEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `progression_rules` WHERE `planId` = :planId", {
+            planId,
+        }) as RuleRecordResults;
 
         return results.map(obj => new RuleRecord(obj));
     }
@@ -43,7 +53,7 @@ export class RuleRecord implements RuleEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `progression_rules`(`id`, `rule`, `createdAt`) VALUES(:id, :rule, :createdAt)", this);
+        await pool.execute("INSERT INTO `progression_rules`(`id`, `rule`, `createdAt`, `planId`) VALUES(:id, :rule, :createdAt, :planId)", this);
     }
 
     async update() {
