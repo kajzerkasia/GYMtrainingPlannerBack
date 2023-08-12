@@ -1,11 +1,10 @@
 import {createPool} from "mysql2/promise";
-import {config} from "../config/config";
 
 export const pool = createPool({
-    host: config.dbHost,
-    user: config.dbUser,
-    password: config.dbPassword,
-    database: config.dbDatabase,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     namedPlaceholders: true,
     decimalNumbers: true,
 });

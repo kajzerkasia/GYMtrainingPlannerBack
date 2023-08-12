@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, {json, Router} from "express";
 import cors from 'cors';
 import 'express-async-errors';
@@ -7,14 +8,13 @@ import {exerciseRouter} from "./routers/exercise.router";
 import {ruleRouter} from "./routers/rule.router";
 import {partOfPlanRouter} from "./routers/part-of-plan.router";
 import {detailRouter} from "./routers/detail.router";
-import {config} from "./config/config";
 import {planRouter} from "./routers/plan.router";
 import {eventRouter} from "./routers/event.router";
 
 const app = express();
 
 app.use(cors({
-    origin: config.corsOrigin,
+    origin: process.env.CORS_ORIGIN
 }));
 
 app.use(json());
