@@ -3,7 +3,6 @@ import {ExerciseRecord} from "../records/exercise.record";
 import {ValidationError} from "../utils/errors";
 const DOMPurify = require('isomorphic-dompurify');
 
-
 export const exerciseRouter = Router()
 
     .get('/exercises', async (req, res) => {

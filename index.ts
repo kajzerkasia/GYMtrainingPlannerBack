@@ -10,6 +10,7 @@ import {partOfPlanRouter} from "./routers/part-of-plan.router";
 import {detailRouter} from "./routers/detail.router";
 import {planRouter} from "./routers/plan.router";
 import {eventRouter} from "./routers/event.router";
+import {demoMiddleware} from "./middlewares/demo";
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(cors({
 }));
 
 app.use(json());
+
+app.use(demoMiddleware);
 
 // app.use(rateLimit({
 //     windowMs: 5 * 60 * 1000, // 5 minutes
