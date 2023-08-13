@@ -29,13 +29,13 @@ export class EventRecord implements EventEntity {
     }
 
     static async findAll(): Promise<EventEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `events`") as EventRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `trainings`") as EventRecordResults;
 
         return results.map(obj => new EventRecord(obj));
     }
 
     static async getOne(id: string): Promise<EventRecord | null> {
-        const [results] = await pool.execute("SELECT * from `events` WHERE `id` = :id", {
+        const [results] = await pool.execute("SELECT * from `trainings` WHERE `id` = :id", {
             id,
         }) as EventRecordResults;
         return results.length === 0 ? null : new EventRecord(results[0]);
@@ -48,12 +48,12 @@ export class EventRecord implements EventEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `events`(`id`, `planName`, `partName`, `startDate`, `endDate`) VALUES(:id, :planName, :partName, :startDate, :endDate)", this);
+        await pool.execute("INSERT INTO `trainings`(`id`, `planName`, `partName`, `startDate`, `endDate`) VALUES(:id, :planName, :partName, :startDate, :endDate)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `events` SET `planName` = :planName, `partName` = :partName, `startDate` = :startDate, `endDate` = :endDate WHERE `id` = :id", {
+        await pool.execute("UPDATE `trainings` SET `planName` = :planName, `partName` = :partName, `startDate` = :startDate, `endDate` = :endDate WHERE `id` = :id", {
             id: this.id,
             planName: this.planName,
             partName: this.partName,
@@ -64,7 +64,7 @@ export class EventRecord implements EventEntity {
     }
 
     async delete(): Promise<void> {
-        await pool.execute("DELETE FROM `events` WHERE `id` = :id", {
+        await pool.execute("DELETE FROM `trainings` WHERE `id` = :id", {
             id: this.id,
         })
     }
