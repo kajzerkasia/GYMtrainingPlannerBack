@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express, {json, Router} from "express";
+import express, {Router} from "express";
 import cors from 'cors';
 import 'express-async-errors';
 import {handleError} from "./utils/errors";
@@ -11,6 +11,8 @@ import {detailRouter} from "./routers/detail.router";
 import {planRouter} from "./routers/plan.router";
 import {eventRouter} from "./routers/event.router";
 import {demoMiddleware} from "./middlewares/demo";
+import {authRouter} from "./routers/auth.router";
+
 
 const app = express();
 
@@ -20,16 +22,24 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN
 }));
 
-app.use(json());
-
 app.use(demoMiddleware);
+
+app.use(express.json());
 
 // app.use(rateLimit({
 //     windowMs: 5 * 60 * 1000, // 5 minutes
 //     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 // }))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    next();
+});
 
 const router = Router();
+
+router.use('/auth-user', authRouter);
 
 router.use('/add-exercise', exerciseRouter);
 router.use('/add-rule', ruleRouter);
@@ -37,8 +47,18 @@ router.use('/add-part', partOfPlanRouter);
 router.use('/add-detail', detailRouter);
 router.use('/add-plan', planRouter);
 router.use('/add-event', eventRouter);
-
 app.use('/api', router);
+
+app.use('/api/auth-user', (req, res, next) => {
+    console.log('Request to /api/auth-user:', req.method, req.url);
+    next();
+});
+
+// app.use(({error, req, res, next}: any) => {
+//     const status = error.status || 500;
+//     const message = error.message || 'Something went wrong.';
+//     res.status(status).json({message: message});
+// });
 
 app.use(handleError);
 
