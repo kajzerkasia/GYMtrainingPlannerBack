@@ -2,6 +2,7 @@ import {Router} from "express";
 import {ValidationError} from "../utils/errors";
 import {PlanRecord} from "../records/plan.record";
 import DOMPurify from "isomorphic-dompurify";
+const { checkAuth } = require('../utils/auth');
 
 export const planRouter = Router()
 
@@ -20,8 +21,11 @@ export const planRouter = Router()
         res.json(plan);
     })
 
+    .use(checkAuth)
+
     .post('/list', async (req, res) => {
         const plan = new PlanRecord(req.body);
+        console.log(req.body)
         await plan.insert();
 
         res.json(plan);

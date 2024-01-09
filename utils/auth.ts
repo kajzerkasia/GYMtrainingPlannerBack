@@ -19,9 +19,9 @@ function isValidPassword(password: string, storedPassword: string) {
 }
 
 interface RequestData {
-    token: string;
-    method: string;
-    headers: any;
+    token?: string;
+    method?: string;
+    headers?: any;
 }
 
 interface checkAuthMiddlewareProps {
@@ -31,7 +31,7 @@ interface checkAuthMiddlewareProps {
 }
 
 function checkAuthMiddleware({req, res, next}: checkAuthMiddlewareProps) {
-    if (req.method === 'OPTIONS') {
+    if (!req?.method || req.method === 'OPTIONS') {
         return next();
     }
     if (!req.headers.authorization) {
