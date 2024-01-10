@@ -1,5 +1,9 @@
 import {UserEntity} from "../types";
 import {ValidationError} from "../utils/errors";
+import {pool} from "../utils/db";
+import {FieldPacket} from "mysql2";
+
+type UserRecordResults = [UserEntity[], FieldPacket[]];
 
 export class UserRecord implements UserEntity {
     public id: string;
@@ -20,5 +24,11 @@ export class UserRecord implements UserEntity {
         this.email = obj.email;
         this.password = obj.password;
         this.createdAt = obj.createdAt;
+    }
+
+    static async findAll(): Promise<UserEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `users` ORDER BY `createdAt` ASC") as UserRecordResults;
+
+        return results.map(obj => new UserRecord(obj));
     }
 }
