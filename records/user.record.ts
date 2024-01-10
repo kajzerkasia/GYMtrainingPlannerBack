@@ -2,6 +2,7 @@ import {UserEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
+import {v4 as uuid} from 'uuid';
 
 type UserRecordResults = [UserEntity[], FieldPacket[]];
 
@@ -37,5 +38,17 @@ export class UserRecord implements UserEntity {
             id,
         }) as UserRecordResults;
         return results.length === 0 ? null : new UserRecord(results[0]);
+    }
+
+    async insert(): Promise<void> {
+        if (!this.id || !this.createdAt) {
+            this.id = uuid();
+            this.createdAt = new Date();
+
+        } else {
+            throw new Error('Użytkownik o podanym emailu już istnieje.');
+        }
+
+        await pool.execute("INSERT INTO `users`(`id`, `email`, `password`, `createdAt`) VALUES(:id, :email, :password, :createdAt)", this);
     }
 }
