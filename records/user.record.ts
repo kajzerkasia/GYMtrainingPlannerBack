@@ -31,4 +31,11 @@ export class UserRecord implements UserEntity {
 
         return results.map(obj => new UserRecord(obj));
     }
+
+    static async getOne(id: string): Promise<UserRecord | null> {
+        const [results] = await pool.execute("SELECT * from `users` WHERE `id` = :id", {
+            id,
+        }) as UserRecordResults;
+        return results.length === 0 ? null : new UserRecord(results[0]);
+    }
 }
