@@ -40,6 +40,19 @@ export class UserRecord implements UserEntity {
         return results.length === 0 ? null : new UserRecord(results[0]);
     }
 
+    static async getEmail(email: string): Promise<UserEntity | null> {
+        const [results] = await pool.execute("SELECT * from `users` WHERE `email` = :email", {
+            email,
+        }) as UserRecordResults;
+
+        return results.length === 0 ? null : {
+            id: results[0].id,
+            email: results[0].email,
+            password: results[0].password,
+            createdAt: results[0].createdAt,
+        };
+    }
+
     async insert(): Promise<void> {
         if (!this.id || !this.createdAt) {
             this.id = uuid();

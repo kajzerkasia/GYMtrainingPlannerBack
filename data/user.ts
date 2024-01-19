@@ -1,32 +1,31 @@
+import {UserRecord} from "../records/user.record";
 const { NotFoundError } = require('../utils/errors');
-import {readData, User, writeData} from './util';
-import {v4 as generateId} from 'uuid';
 import {hash} from 'bcryptjs';
+import {UserEntity} from "../types";
 
-async function add(data: User) {
-    const storedData = await readData();
-    const userId = generateId();
+async function add(data: UserEntity) {
+
     const hashedPw = await hash(data.password, 12);
-    if (!storedData.users) {
-        storedData.users = [];
-    }
-    storedData.users.push({ ...data, password: hashedPw, id: userId });
-    await writeData(storedData);
-    return { id: userId, email: data.email };
+
+    const user = new UserRecord({...data, password: hashedPw});
+    await user.insert();
+
+    return { email: data.email };
 }
 
 async function get(email: string) {
-    const storedData = await readData();
-    if (!storedData.users || storedData.users.length === 0) {
-        throw new NotFoundError('Could not find any users.');
-    }
-
-    const user = storedData.users.find((ev: any) => ev.email === email);
+    const user = await UserRecord.getEmail(email);
+    console.log(user);
     if (!user) {
         throw new NotFoundError('Could not find user for email ' + email);
     }
 
-    return user;
+    return {
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        createdAt: user.createdAt,
+    };
 }
 
 exports.add = add;
