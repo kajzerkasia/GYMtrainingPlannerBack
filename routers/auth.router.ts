@@ -27,23 +27,23 @@ authRouter.post('/signup', async (req, res, next) => {
     let errors: any = {};
 
     if (!isValidEmail(data.email)) {
-        errors.email = 'Invalid email.';
+        errors.email = 'Niepoprawny adres email.';
     } else {
         try {
             const existingUser = await get(data.email);
             if (existingUser) {
-                errors.email = 'Email exists already.';
+                errors.email = 'Użytkownik o podanym emailu już istnieje.';
             }
         } catch (error) {}
     }
 
     if (!isValidText(data.password, 6)) {
-        errors.password = 'Invalid password. Must be at least 6 characters long.';
+        errors.password = 'Hasło musi mieć co najmniej 6 znaków.';
     }
 
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({
-            message: 'User signup failed due to validation errors.',
+            message: 'Rejestracja użytkownika nie powiodła się z powodów błędów walidacji.',
             errors,
         });
     }
@@ -53,7 +53,7 @@ authRouter.post('/signup', async (req, res, next) => {
         const authToken = createJSONToken(createdUser.email);
         res
             .status(201)
-            .json({ message: 'User created.', user: createdUser, token: authToken });
+            .json({ message: 'Użytkownik zarejestrowany.', user: createdUser, token: authToken });
     } catch (error) {
         next(error);
     }
@@ -67,14 +67,13 @@ authRouter.post('/login', async (req, res) => {
     try {
         user = await get(email);
     } catch (error) {
-        return res.status(401).json({ message: 'Authentication failed.' });
+        return res.status(401).json({ message: 'Uwierzytelnianie nie powiodło się.' });
     }
 
     const pwIsValid = await isValidPassword(password, user.password);
     if (!pwIsValid) {
         return res.status(422).json({
-            message: 'Invalid credentials.',
-            errors: { credentials: 'Invalid email or password entered.' },
+            errors: { credentials: 'Wprowadzono nieprawidłowy adres e-mail lub hasło.' },
         });
     }
 
