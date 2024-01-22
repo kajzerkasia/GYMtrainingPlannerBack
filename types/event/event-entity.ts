@@ -2,6 +2,6 @@ export interface EventEntity {
     id?: string;
     planName: string;
     partName: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | number;
+    endDate: Date | number;
 }
