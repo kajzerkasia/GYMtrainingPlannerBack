@@ -54,14 +54,19 @@ export const eventRouter = Router()
     .put('/events/:id', async (req, res) => {
         const event = await EventRecord.getOne(req.params.id);
 
+        const { startDate, endDate } = req.body;
+
+        const formattedStartDate = moment(startDate).format('YYYY-MM-DD HH:mm:ss');
+        const formattedEndDate = moment(endDate).format('YYYY-MM-DD HH:mm:ss');
+
         if (!event) {
             throw new ValidationError('Nie znaleziono takiego wydarzenia.');
         }
 
         event.planName = req.body.planName;
         event.partName = req.body.partName;
-        event.startDate = new Date(req.body.startDate);
-        event.endDate = new Date(req.body.endDate);
+        event.startDate = formattedStartDate;
+        event.endDate = formattedEndDate;
 
         await event.update();
 
