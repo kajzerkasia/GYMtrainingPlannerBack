@@ -10,8 +10,8 @@ export class EventRecord implements EventEntity {
     public id: string;
     public planName: string;
     public partName: string;
-    public startDate: Date;
-    public endDate: Date;
+    public startDate: string;
+    public endDate: string;
 
     constructor(obj: EventEntity) {
         if (!obj.planName || obj.planName.length > 50) {
