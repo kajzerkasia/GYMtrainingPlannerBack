@@ -2,17 +2,21 @@ import {Router} from "express";
 import {ValidationError} from "../utils/errors";
 import {PlanRecord} from "../records/plan.record";
 import DOMPurify from "isomorphic-dompurify";
-const { checkAuth } = require('../utils/auth');
+
+const {checkAuth} = require('../utils/auth');
 
 export const planRouter = Router()
 
     .get('/list', async (req, res) => {
 
-        if (typeof req.query.slug === 'string') {
+        if (typeof req.query.userId === 'string') {
+            return res.json(await PlanRecord.findAllWithUserId(req.query.userId));
+        } else if (typeof req.query.slug === 'string') {
             return res.json(await PlanRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
+        } else {
+            return res.json(await PlanRecord.findAll());
         }
 
-        return res.json(await PlanRecord.findAll());
     })
 
     .get('/list/:id', async (req, res) => {
