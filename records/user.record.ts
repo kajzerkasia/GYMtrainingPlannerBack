@@ -3,6 +3,7 @@ import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {v4 as uuid} from 'uuid';
+import {slugify} from "../utils/slugify";
 
 type UserRecordResults = [UserEntity[], FieldPacket[]];
 
@@ -11,6 +12,7 @@ export class UserRecord implements UserEntity {
     public email: string;
     public password: string;
     public createdAt: Date;
+    public slug: string;
 
     constructor(obj: UserEntity) {
         if (!obj.email || !obj.email.includes('@')) {
@@ -25,10 +27,19 @@ export class UserRecord implements UserEntity {
         this.email = obj.email;
         this.password = obj.password;
         this.createdAt = obj.createdAt;
+        this.slug = obj.slug;
     }
 
     static async findAll(): Promise<UserEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `users` ORDER BY `createdAt` ASC") as UserRecordResults;
+
+        return results.map(obj => new UserRecord(obj));
+    }
+
+    static async findAllWithSlug(slug: string): Promise<UserEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE `slug` = :slug ORDER BY `createdAt` ASC", {
+            slug,
+        }) as UserRecordResults;
 
         return results.map(obj => new UserRecord(obj));
     }
@@ -50,6 +61,7 @@ export class UserRecord implements UserEntity {
             email: results[0].email,
             password: results[0].password,
             createdAt: results[0].createdAt,
+            slug: results[0].slug,
         };
     }
 
@@ -62,6 +74,12 @@ export class UserRecord implements UserEntity {
             throw new Error('Użytkownik o podanym emailu już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `users`(`id`, `email`, `password`, `createdAt`) VALUES(:id, :email, :password, :createdAt)", this);
+        const [results] = await pool.execute("SELECT `slug` FROM `users`") as UserRecordResults;
+        const existingSlugs = results.map((row: any) => row.slug);
+
+        this.slug = slugify(this.slug || this.email, existingSlugs);
+
+
+        await pool.execute("INSERT INTO `users`(`id`, `email`, `password`, `createdAt`, `slug`) VALUES(:id, :email, :password, :createdAt, :slug)", this);
     }
 }

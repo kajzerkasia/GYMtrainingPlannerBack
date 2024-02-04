@@ -1,7 +1,10 @@
 import {NextFunction, Router} from "express";
-const { add, get } = require('../data/user');
-const { createJSONToken, isValidPassword } = require('../utils/auth');
-const { isValidEmail, isValidText } = require('../utils/validation');
+import {UserRecord} from "../records/user.record";
+import DOMPurify from "isomorphic-dompurify";
+
+const {add, get} = require('../data/user');
+const {createJSONToken, isValidPassword} = require('../utils/auth');
+const {isValidEmail, isValidText} = require('../utils/validation');
 
 export const authRouter = Router();
 
@@ -22,6 +25,21 @@ interface RouterProps {
     next: NextFunction;
 }
 
+authRouter.get('/users', async (req, res, next) => {
+    if (typeof req.query.slug === 'string') {
+        return res.json(await UserRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
+    } else {
+        return res.json(await UserRecord.findAll());
+    }
+})
+
+authRouter.get('/users/:id', async (req, res) => {
+    const user = await UserRecord.getOne(req.params.id);
+
+    res.json(user);
+})
+
+
 authRouter.post('/signup', async (req, res, next) => {
     const data = req.body;
     let errors: any = {};
@@ -34,7 +52,8 @@ authRouter.post('/signup', async (req, res, next) => {
             if (existingUser) {
                 errors.email = 'Użytkownik o podanym emailu już istnieje.';
             }
-        } catch (error) {}
+        } catch (error) {
+        }
     }
 
     if (!isValidText(data.password, 6)) {
@@ -53,7 +72,7 @@ authRouter.post('/signup', async (req, res, next) => {
         const authToken = createJSONToken(createdUser.email);
         res
             .status(201)
-            .json({ message: 'Użytkownik zarejestrowany.', user: createdUser, token: authToken });
+            .json({message: 'Użytkownik zarejestrowany.', user: createdUser, token: authToken});
     } catch (error) {
         next(error);
     }
@@ -67,18 +86,18 @@ authRouter.post('/login', async (req, res) => {
     try {
         user = await get(email);
     } catch (error) {
-        return res.status(401).json({ message: 'Uwierzytelnianie nie powiodło się.' });
+        return res.status(401).json({message: 'Uwierzytelnianie nie powiodło się.'});
     }
 
     const pwIsValid = await isValidPassword(password, user.password);
     if (!pwIsValid) {
         return res.status(422).json({
-            errors: { credentials: 'Wprowadzono nieprawidłowy adres e-mail lub hasło.' },
+            errors: {credentials: 'Wprowadzono nieprawidłowy adres e-mail lub hasło.'},
         });
     }
 
     const token = createJSONToken(email);
-    res.json({ token });
+    res.json({token});
 });
 
 

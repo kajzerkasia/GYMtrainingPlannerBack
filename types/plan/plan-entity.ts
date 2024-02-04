@@ -3,4 +3,5 @@ export interface PlanEntity {
     name: string;
     slug?: string;
     createdAt?: Date;
+    userId: string;
 }

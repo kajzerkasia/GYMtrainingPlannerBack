@@ -13,6 +13,7 @@ export class PlanRecord implements PlanEntity {
     public name: string;
     public slug: string;
     public createdAt: Date;
+    public userId: string;
 
     constructor(obj: PlanEntity, existingSlugs: string[] = []) {
         if (!obj.name || obj.name.length > 50) {
@@ -23,10 +24,19 @@ export class PlanRecord implements PlanEntity {
         this.name = obj.name;
         this.slug = slugify(obj.slug || obj.name, existingSlugs);
         this.createdAt = obj.createdAt;
+        this.userId = obj.userId;
     }
 
     static async findAll(): Promise<PlanEntity[]> {
         const [results] = await pool.execute("SELECT * FROM `plans_list` ORDER BY `createdAt` ASC") as PlanRecordResults;
+
+        return results.map(obj => new PlanRecord(obj));
+    }
+
+    static async findAllWithUserId(userId: string): Promise<PlanEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `plans_list` WHERE `userId` = :userId ORDER BY `createdAt` ASC", {
+            userId,
+        }) as PlanRecordResults;
 
         return results.map(obj => new PlanRecord(obj));
     }
@@ -62,7 +72,7 @@ export class PlanRecord implements PlanEntity {
             this.slug = slugify(this.slug || this.name, existingSlugs);
         }
 
-        await pool.execute("INSERT INTO `plans_list`(`id`, `name`, `slug`, `createdAt`) VALUES(:id, :name, :slug, :createdAt)", this);
+        await pool.execute("INSERT INTO `plans_list`(`id`, `name`, `slug`, `createdAt`, `userId`) VALUES(:id, :name, :slug, :createdAt, :userId)", this);
         await pool.execute("INSERT INTO `plan_details`(`id`, `length`, `frequency`, `schedule`, `planId`) VALUES(:id, NULL, NULL, NULL, :planId)", { id: uuid(), planId: this.id });
     }
 

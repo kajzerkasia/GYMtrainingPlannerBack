@@ -50,7 +50,6 @@ router.use('/add-event', eventRouter);
 app.use('/api', router);
 
 app.use('/api/auth-user', (req, res, next) => {
-    console.log('Request to /api/auth-user:', req.method, req.url);
     next();
 });
 
