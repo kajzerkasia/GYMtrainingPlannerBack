@@ -36,14 +36,6 @@ export class UserRecord implements UserEntity {
         return results.map(obj => new UserRecord(obj));
     }
 
-    static async findAllWithSlug(slug: string): Promise<UserEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `users` WHERE `slug` = :slug ORDER BY `createdAt` ASC", {
-            slug,
-        }) as UserRecordResults;
-
-        return results.map(obj => new UserRecord(obj));
-    }
-
     static async getOne(id: string): Promise<UserRecord | null> {
         const [results] = await pool.execute("SELECT * from `users` WHERE `id` = :id", {
             id,
