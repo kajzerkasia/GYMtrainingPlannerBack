@@ -8,6 +8,7 @@ type UserRecordResults = [UserEntity[], FieldPacket[]];
 
 export class UserRecord implements UserEntity {
     public id: string;
+    public name: string;
     public email: string;
     public password: string;
     public createdAt: Date;
@@ -22,6 +23,7 @@ export class UserRecord implements UserEntity {
         }
 
         this.id = obj.id;
+        this.name = obj.name;
         this.email = obj.email;
         this.password = obj.password;
         this.createdAt = obj.createdAt;
@@ -47,6 +49,7 @@ export class UserRecord implements UserEntity {
 
         return results.length === 0 ? null : {
             id: results[0].id,
+            name: results[0].name,
             email: results[0].email,
             password: results[0].password,
             createdAt: results[0].createdAt
@@ -62,6 +65,6 @@ export class UserRecord implements UserEntity {
             throw new Error('Użytkownik o podanym emailu już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `users`(`id`, `email`, `password`, `createdAt`) VALUES(:id, :email, :password, :createdAt)", this);
+        await pool.execute("INSERT INTO `users`(`id`, `name`, `email`, `password`, `createdAt`) VALUES(:id, :name, :email, :password, :createdAt)", this);
     }
 }
