@@ -26,11 +26,7 @@ interface RouterProps {
 }
 
 authRouter.get('/users', async (req, res, next) => {
-    if (typeof req.query.slug === 'string') {
-        return res.json(await UserRecord.findAllWithSlug(DOMPurify.sanitize(req.query.slug)));
-    } else {
         return res.json(await UserRecord.findAll());
-    }
 })
 
 authRouter.get('/users/:id', async (req, res) => {
