@@ -12,6 +12,7 @@ export class EventRecord implements EventEntity {
     public partName: string;
     public startDate: string;
     public endDate: string;
+    public userId: string;
 
     constructor(obj: EventEntity) {
         if (!obj.planName || obj.planName.length > 50) {
@@ -26,6 +27,7 @@ export class EventRecord implements EventEntity {
         this.partName = obj.partName;
         this.startDate = obj.startDate;
         this.endDate = obj.endDate;
+        this.userId = obj.userId;
     }
 
     static async findAll(): Promise<EventEntity[]> {
@@ -33,6 +35,15 @@ export class EventRecord implements EventEntity {
 
         return results.map(obj => new EventRecord(obj));
     }
+
+    static async findAllWithUserId(userId: string): Promise<EventEntity[]> {
+        const [results] = await pool.execute("SELECT * FROM `trainings` WHERE `userId` = :userId", {
+            userId,
+        }) as EventRecordResults;
+
+        return results.map(obj => new EventRecord(obj));
+    }
+
 
     static async getOne(id: string): Promise<EventRecord | null> {
         const [results] = await pool.execute("SELECT * from `trainings` WHERE `id` = :id", {
@@ -48,17 +59,18 @@ export class EventRecord implements EventEntity {
             throw new Error('Nie można dodać czegoś, co już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `trainings`(`id`, `planName`, `partName`, `startDate`, `endDate`) VALUES(:id, :planName, :partName, :startDate, :endDate)", this);
+        await pool.execute("INSERT INTO `trainings`(`id`, `planName`, `partName`, `startDate`, `endDate`, `userId`) VALUES(:id, :planName, :partName, :startDate, :endDate, :userId)", this);
     }
 
     async update() {
 
-        await pool.execute("UPDATE `trainings` SET `planName` = :planName, `partName` = :partName, `startDate` = :startDate, `endDate` = :endDate WHERE `id` = :id", {
+        await pool.execute("UPDATE `trainings` SET `planName` = :planName, `partName` = :partName, `startDate` = :startDate, `endDate` = :endDate, `userId` = :userId WHERE `id` = :id", {
             id: this.id,
             planName: this.planName,
             partName: this.partName,
             startDate: this.startDate,
             endDate: this.endDate,
+            userId: this.userId,
         });
 
     }

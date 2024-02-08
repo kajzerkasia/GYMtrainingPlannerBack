@@ -1,14 +1,16 @@
-import { Router } from "express";
-import { ValidationError } from "../utils/errors";
-import { EventRecord } from "../records/event.record";
+import {Router} from "express";
+import {ValidationError} from "../utils/errors";
+import {EventRecord} from "../records/event.record";
 import moment from "moment";
 
 export const eventRouter = Router()
 
     .get('/events', async (req, res) => {
-        const events = await EventRecord.findAll();
-
-        res.json(events);
+        if (typeof req.query.userId === 'string') {
+            return res.json(await EventRecord.findAllWithUserId(req.query.userId));
+        } else {
+            return res.json(await EventRecord.findAll());
+        }
     })
 
     .get('/events/:id', async (req, res) => {
@@ -19,7 +21,7 @@ export const eventRouter = Router()
 
     .post('/events', async (req, res) => {
         try {
-            const { startDate, endDate } = req.body;
+            const {startDate, endDate} = req.body;
 
             const formattedStartDate = moment(startDate).format('YYYY-MM-DD HH:mm:ss');
             const formattedEndDate = moment(endDate).format('YYYY-MM-DD HH:mm:ss');
@@ -35,7 +37,7 @@ export const eventRouter = Router()
             res.json(event);
         } catch (error) {
             console.error("Wystąpił błąd podczas dodawania wydarzenia:", error);
-            res.status(500).json({ error: "Wystąpił błąd podczas dodawania wydarzenia." });
+            res.status(500).json({error: "Wystąpił błąd podczas dodawania wydarzenia."});
         }
     })
 
@@ -54,7 +56,7 @@ export const eventRouter = Router()
     .put('/events/:id', async (req, res) => {
         const event = await EventRecord.getOne(req.params.id);
 
-        const { startDate, endDate } = req.body;
+        const {startDate, endDate} = req.body;
 
         const formattedStartDate = moment(startDate).format('YYYY-MM-DD HH:mm:ss');
         const formattedEndDate = moment(endDate).format('YYYY-MM-DD HH:mm:ss');
