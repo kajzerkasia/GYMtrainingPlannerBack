@@ -4,4 +4,5 @@ export interface EventEntity {
     partName: string;
     startDate: string;
     endDate: string;
+    userId: string;
 }
