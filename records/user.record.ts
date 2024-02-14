@@ -11,6 +11,7 @@ export class UserRecord implements UserEntity {
     public name: string;
     public email: string;
     public password: string;
+    public image: string;
     public createdAt: Date;
 
     constructor(obj: UserEntity) {
@@ -26,6 +27,7 @@ export class UserRecord implements UserEntity {
         this.name = obj.name;
         this.email = obj.email;
         this.password = obj.password;
+        this.image = obj.image;
         this.createdAt = obj.createdAt;
     }
 
@@ -52,6 +54,7 @@ export class UserRecord implements UserEntity {
             name: results[0].name,
             email: results[0].email,
             password: results[0].password,
+            image: results[0].image,
             createdAt: results[0].createdAt
         };
     }
@@ -65,6 +68,6 @@ export class UserRecord implements UserEntity {
             throw new Error('Użytkownik o podanym emailu już istnieje.');
         }
 
-        await pool.execute("INSERT INTO `users`(`id`, `name`, `email`, `password`, `createdAt`) VALUES(:id, :name, :email, :password, :createdAt)", this);
+        await pool.execute("INSERT INTO `users`(`id`, `name`, `email`, `password`, `image`, `createdAt`) VALUES(:id, :name, :email, :password, :image, :createdAt)", this);
     }
 }
