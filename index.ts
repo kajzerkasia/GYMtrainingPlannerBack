@@ -12,6 +12,7 @@ import {planRouter} from "./routers/plan.router";
 import {eventRouter} from "./routers/event.router";
 import {demoMiddleware} from "./middlewares/demo";
 import {authRouter} from "./routers/auth.router";
+import path from "node:path";
 
 
 const app = express();
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
     next();
 });
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const router = Router();
 
