@@ -1,30 +1,12 @@
-import {NextFunction, Router} from "express";
+import {Router} from "express";
 import {UserRecord} from "../records/user.record";
-import DOMPurify from "isomorphic-dompurify";
+import fs from "node:fs/promises";
 
 const {add, get} = require('../data/user');
 const {createJSONToken, isValidPassword} = require('../utils/auth');
 const {isValidEmail, isValidText} = require('../utils/validation');
 
 export const authRouter = Router();
-
-interface RequestData {
-    body: {
-        email: string;
-        password: string;
-    }
-}
-
-interface ResponseData {
-    status: any;
-}
-
-interface RouterProps {
-    req: RequestData;
-    res: ResponseData;
-    next: NextFunction;
-}
-
 authRouter.get('/users', async (req, res, next) => {
         return res.json(await UserRecord.findAll());
 })
@@ -34,6 +16,12 @@ authRouter.get('/users/:id', async (req, res) => {
 
     res.json(user);
 })
+
+authRouter.get('/images', async (req, res) => {
+    const imagesFileContent = await fs.readFile('./data/images.json');
+    const images = JSON.parse(imagesFileContent.toString());
+    res.json({ images });
+});
 
 
 authRouter.post('/signup', async (req, res, next) => {
