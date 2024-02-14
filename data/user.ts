@@ -15,7 +15,6 @@ async function add(data: UserEntity) {
 
 async function get(email: string) {
     const user = await UserRecord.getEmail(email);
-    console.log(user);
     if (!user) {
         throw new NotFoundError('Could not find user for email ' + email);
     }
@@ -24,6 +23,8 @@ async function get(email: string) {
         id: user.id,
         email: user.email,
         password: user.password,
+        name: user.name,
+        image: user.image,
         createdAt: user.createdAt,
     };
 }
