@@ -6,5 +6,17 @@
   {
     "path": "avatar_woman.png",
     "caption": "Avatar przedstawiający kobietę"
+  },
+  {
+    "path": "hantel.png",
+    "caption": "Avatar przedstawiający hantel"
+  },
+  {
+    "path": "avatar_man2.png",
+    "caption": "Avatar przedstawiający mężczyznę"
+  },
+  {
+    "path": "avatar_woman2.png",
+    "caption": "Avatar przedstawiający kobietę"
   }
 ]
